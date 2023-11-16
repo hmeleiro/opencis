@@ -34,13 +34,6 @@ jobs:
         with:
           extra-packages: any::pkgdown, local::.
           needs: website
-      - name: Install dependencies
-        run: |
-          # ⚠️ leave other commands intact,
-          # and add the following command to the end of the list 👇🏼
-          remotes::install_deps(dependencies = TRUE)
-          install.packages("pkgdown", type = "binary")
-          install.packages("preferably")
       - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4.4.1
