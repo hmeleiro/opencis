@@ -8,6 +8,7 @@
 #' @importFrom dplyr rename
 #'
 #' @keywords Internal
+#' @noRd
 parse_response <- function(res) {
   if(res$status_code == 200) {
     res_content <- content(res, "parsed")
@@ -37,6 +38,7 @@ parse_response <- function(res) {
 #' @importFrom dplyr rename
 #'
 #' @keywords Internal
+#' @noRd
 parse_response_series <- function(res) {
   if(res$status_code == 200) {
     res_content <- content(res, "parsed")
@@ -98,6 +100,7 @@ parse_response_series <- function(res) {
 #' @importFrom purrr map map_df
 #'
 #' @keywords Internal
+#' @noRd
 flatten_series <- function(res_content) {
 
   if(!"series" %in% unique(unlist(map(res_content$lista, names)))) {

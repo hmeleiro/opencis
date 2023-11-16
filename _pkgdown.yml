@@ -2,3 +2,17 @@ url: ~
 template:
   package: preferably
   bootstrap: 5
+reference:
+- title: Import data
+  desc:  Functions to import data from the CIS archive.
+- contents:
+  - starts_with("read_")
+- title: Search
+  desc:  Functions to search for studies, questions and timeseries in the CIS archive.
+- contents:
+  - starts_with("search_")
+- title: Retrieve categories
+  desc:  Functions to retrieve the valid category values to narrow search queries.
+- contents:
+  - starts_with("get_")
+
