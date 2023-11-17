@@ -22,3 +22,7 @@ Imports:
     rlang (>= 1.1.1),
     haven (>= 2.5.3)
 URL: https://hmeleiro.github.io/opencis/
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

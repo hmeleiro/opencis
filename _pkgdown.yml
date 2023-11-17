@@ -1,7 +1,34 @@
-url: https://hmeleiro.github.io/opencis/
+url: https://hmeleiro.github.io/opencis
 template:
   package: preferably
   bootstrap: 5
+lang: en
+navbar:
+  structure:
+    left:  [intro, reference, articles]
+    right: [github, twitter, search]
+  components:
+    github:
+      icon: fa-github
+      href: https://github.com/hmeleiro/opencis
+      aria-label: Github
+    twitter:
+      icon: fa-twitter
+      href: http://twitter.com/hmeleiros
+      aria-label: Twitter
+repo:
+  url:
+    home: https://github.com/hmeleiro/opencis
+    issue: https://github.com/hmeleiro/opencis/issues
+    user: https://github.com/hmeleiro
+
+home:
+  links:
+    - text: Report a bug
+      href: https://github.com/hmeleiro/opencis/issues
+  sidebar:
+    structure: [links, license, authors, citation, dev]
+
 reference:
 - title: Import data
   desc:  Functions to import data from the CIS archive.

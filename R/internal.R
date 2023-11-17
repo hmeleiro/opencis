@@ -52,8 +52,6 @@ parse_response_series <- function(res) {
     response_metadata_categories <- response_categories[i]
     response_categories <- gsub(" $|^ ", "", response_categories[-i])
 
-    x <- res_content$ficha$serie_temporal[[1]]
-
     question_data <- map_df(res_content$ficha$serie_temporal, function(x) {
       response_values <- unlist(x$datos)
       response_values <- as.numeric(gsub("[()]", "", response_values))

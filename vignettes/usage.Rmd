@@ -1,0 +1,68 @@
+---
+title: "How to use opencis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{How to use opencis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+
+You can install `opencis` from Github using the `devtools` package:
+
+``` {r, eval=FALSE}
+devtools::install_github("hmeleiro/opencis")
+```
+
+
+## Usage
+
+The package includes three group of functions. 
+
+The first group is used to search for surveys, survey questions and timeseries. 
+
+``` {r}
+library(opencis)
+
+# Search for survey studies
+search_studies(search_terms = "preelectoral", since_date = "01-01-2020", until_date = "17-11-2023")
+
+# Search for survey questions
+search_questions(search_terms = "feminismo")
+
+# Search for timeseries
+search_series(search_terms = "situación económica")
+```
+
+The second group of functions retrieves the valid category codes to narrow search queries. [Read the documentation](https://hmeleiro.github.io/opencis/reference/index.html#retrieve-categories) to understand how to use the category codes in the search functions.
+
+``` {r}
+get_study_categories()
+
+get_question_categories()
+
+get_series_category()
+
+```
+
+
+The third group of functions are used to import the data directly into R. 
+
+```{undefined warning=FALSE}
+# Read a survey study
+df <- read_cis("3411")
+print(df)
+
+
+# Read a timeseries
+df_series <- read_series("2092")
+print(df_series)
+```
