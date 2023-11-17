@@ -21,3 +21,4 @@ Imports:
     purrr (>= 1.0.2),
     rlang (>= 1.1.1),
     haven (>= 2.5.3)
+URL: https://hmeleiro.github.io/opencis/

@@ -1,4 +1,4 @@
-url: ~
+url: https://hmeleiro.github.io/opencis/
 template:
   package: preferably
   bootstrap: 5
@@ -15,4 +15,3 @@ reference:
   desc:  Functions to retrieve the valid category values to narrow search queries.
 - contents:
   - starts_with("get_")
-
