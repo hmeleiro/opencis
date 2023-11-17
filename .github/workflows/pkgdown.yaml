@@ -13,7 +13,7 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     # Only restrict concurrency for non-PR jobs
     concurrency:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
@@ -47,7 +47,7 @@ jobs:
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = TRUE)
-          install.packages(c("pkgdown", "devtools"), type = "binary")
+          install.packages(c("pkgdown", "devtools"))
           remotes::install_github("amirmasoudabdol/preferably")
         shell: Rscript {0}
 
