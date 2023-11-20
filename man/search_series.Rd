@@ -17,17 +17,17 @@ search_series(
 \arguments{
 \item{search_terms}{A string with the search terms.}
 
-\item{subject_code}{A string (or a character vector if more than one) with the subject code. The subject code corresponds to the values of the `dmindex` column in the data.frame output of the `get_series_category()` function.}
+\item{subject_code}{A string (or a character vector if more than one) with the subject code. The subject code corresponds to the values of the \code{dmindex} column in the data.frame output of the \code{get_series_category()} function.}
 
-\item{since_date}{A string with the start date of the search in \%d-\%m-\%Y format.}
+\item{since_date}{A string with the start date of the search in '\%d-\%m-\%Y' format.}
 
-\item{until_date}{A string with the end date of the search in \%d-\%m-\%Y format.}
+\item{until_date}{A string with the end date of the search in '\%d-\%m-\%Y' format.}
 
-\item{series_code}{A string with the series code wanted. The series code corresponds to the values of the `dmvariable` column in the data.frame output of the `get_series_category()` function.}
+\item{series_code}{A string with the series code wanted. The series code corresponds to the values of the \code{dmvariable} column in the data.frame output of the \code{get_series_category()} function.}
 
-\item{since_series_code}{A string with the first series code wanted. The series code corresponds to the values of the `dmvariable` column in the data.frame output of the `get_series_category()` function.}
+\item{since_series_code}{A string with the first series code wanted. The series code corresponds to the values of the \code{dmvariable} column in the data.frame output of the \code{get_series_category()} function.}
 
-\item{until_series_code}{A string with the last series code wanted. The series code corresponds to the values of the `dmvariable` column in the data.frame output of the `get_series_category()` function.}
+\item{until_series_code}{A string with the last series code wanted. The series code corresponds to the values of the \code{dmvariable} column in the data.frame output of the \code{get_series_category()} function.}
 }
 \value{
 A data.frame.

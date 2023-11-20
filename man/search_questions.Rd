@@ -18,13 +18,13 @@ search_questions(
 \arguments{
 \item{search_terms}{A string with the search terms.}
 
-\item{descriptor_code}{A string (or a character vector if more than one) with the descriptor code. The descriptor code corresponds to the values of the `codigo` column in the data.frame output of the `get_question_categories()` function.}
+\item{descriptor_code}{A string (or a character vector if more than one) with the descriptor code. The descriptor code corresponds to the values of the \code{codigo} column in the data.frame output of the \code{get_question_categories()} function.}
 
-\item{collection_code}{A string (or a character vector if more than one) with the collection code. The collection code corresponds to the values of the `codigo` column in the data.frame output of the `get_study_colections()` function.}
+\item{collection_code}{A string (or a character vector if more than one) with the collection code. The collection code corresponds to the values of the \code{codigo} column in the data.frame output of the \code{get_study_colections()} function.}
 
-\item{since_date}{A string with the start date of the search in \%d-\%m-\%Y format.}
+\item{since_date}{A string with the start date of the search in '\%d-\%m-\%Y' format.}
 
-\item{until_date}{A string with the end date of the search in \%d-\%m-\%Y format.}
+\item{until_date}{A string with the end date of the search in '\%d-\%m-\%Y' format.}
 
 \item{study_code}{A string with the study code wanted.}
 

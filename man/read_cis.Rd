@@ -4,13 +4,15 @@
 \alias{read_cis}
 \title{Import a CIS study}
 \usage{
-read_cis(study_code)
+read_cis(study_code, verbose = FALSE)
 }
 \arguments{
 \item{study_code}{A string with the study code.}
+
+\item{verbose}{boolean. Controls the messages printed on the console.}
 }
 \value{
-A data.frame.
+A list of length 2 with the following values: 1) data: a data.frame with the individual-level data points for the timeseries. 2) metadata: a data.frame with the series code and their corresponding name
 }
 \description{
 Download and import the data of a CIS study.

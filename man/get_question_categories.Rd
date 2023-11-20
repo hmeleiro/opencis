@@ -11,6 +11,6 @@ A data.frame.
 }
 \description{
 Retrieves the valid categories of CIS questions.
-The values of the `codigo` column can be used in the `descriptor_code`
-parameter of the `search_questions()` function.
+The values of the \code{codigo} column can be used in the \code{descriptor_code}
+parameter of the \code{search_questions()} function.
 }

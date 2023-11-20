@@ -11,8 +11,8 @@ A data.frame.
 }
 \description{
 Retrieves the valid categories of CIS timeseries.
-The values of the `dmindex` column can be used in the `subject_code`
-parameter of the `search_series()` function. The values of the `dmvariable`
-columns can be used in the `series_code`, `since_series_code`, and `until_series_code`
-parameters of the `search_series()`.
+The values of the \code{dmindex} column can be used in the \code{subject_code}
+parameter of the \code{search_series()} function. The values of the \code{dmvariable}
+columns can be used in the \code{series_code}, \code{since_series_code}, and \code{until_series_code}
+parameters of the \code{search_series()}.
 }

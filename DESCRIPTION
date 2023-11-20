@@ -4,7 +4,7 @@ Title: Import Data from Spanish Sociological Research Center (CIS)
 Version: 0.1.0
 Author: Héctor Meleiro
 Maintainer: Héctor Meleiro <hmeleiro@gmail.com>
-Description: Search and import data directly to R from the Spanish Sociological Research Center (CIS).
+Description: Search and import data directly to R from the [Spanish Sociological Research Center (CIS)](https://www.cis.es/inicio).
     The CIS is a public institution that conducts electoral and sociological research studies on the Spanish society. 
     The CIS has a large database of surveys that can be accessed through its website. The package includes functions 
     to search for surveys, survey questions and timeseries, and import the data directly to R.
@@ -16,13 +16,16 @@ Depends:
     R (>= 3.5.0)
 Imports:
     httr (>= 1.4.7),
-    dplyr (>= 1.1.3),
-    tibble (>= 3.2.1),
-    purrr (>= 1.0.2),
-    rlang (>= 1.1.1),
-    haven (>= 2.5.3)
+    dplyr (>= 1.0.0),
+    tibble (>= 3.0.0),
+    purrr (>= 1.0.0),
+    rlang (>= 1.0.0),
+    haven (>= 2.5.3),
+    janitor (>= 1.1.1),
+    lifecycle
 URL: https://hmeleiro.github.io/opencis/
 Suggests: 
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+Roxygen: list(markdown = TRUE)

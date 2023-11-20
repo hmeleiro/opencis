@@ -5,8 +5,8 @@
 #' @param search_terms A string with the search terms.
 #' @param category_code A string (or a character vector if more than one) with the category code. The category code corresponds to the values of the `codigo` column in the data.frame output of the `get_study_categories()` function.
 #' @param collection_code A string (or a character vector if more than one) with the collection code. The collection code corresponds to the values of the `codigo` column in the data.frame output of the `get_study_colections()` function.
-#' @param since_date A string with the start date of the search in \%d-\%m-\%Y format.
-#' @param until_date A string with the end date of the search in \%d-\%m-\%Y format.
+#' @param since_date A string with the start date of the search in '%d-%m-%Y' format.
+#' @param until_date A string with the end date of the search in '%d-%m-%Y' format.
 #' @param study_code A string with the study code wanted.
 #' @param since_study_code A string with the first study code wanted.
 #' @param until_study_code A string with the last study code wanted.
@@ -68,8 +68,8 @@ search_studies <- function(search_terms= NULL, category_code = NULL, collection_
 #' @param search_terms A string with the search terms.
 #' @param descriptor_code A string (or a character vector if more than one) with the descriptor code. The descriptor code corresponds to the values of the `codigo` column in the data.frame output of the `get_question_categories()` function.
 #' @param collection_code A string (or a character vector if more than one) with the collection code. The collection code corresponds to the values of the `codigo` column in the data.frame output of the `get_study_colections()` function.
-#' @param since_date A string with the start date of the search in \%d-\%m-\%Y format.
-#' @param until_date A string with the end date of the search in \%d-\%m-\%Y format.
+#' @param since_date A string with the start date of the search in '%d-%m-%Y' format.
+#' @param until_date A string with the end date of the search in '%d-%m-%Y' format.
 #' @param study_code A string with the study code wanted.
 #' @param since_study_code A string with the first study code wanted.
 #' @param until_study_code A string with the last study code wanted.
@@ -126,8 +126,8 @@ search_questions <- function(search_terms = NULL, descriptor_code = NULL, collec
 #'
 #' @param search_terms A string with the search terms.
 #' @param subject_code A string (or a character vector if more than one) with the subject code. The subject code corresponds to the values of the `dmindex` column in the data.frame output of the `get_series_category()` function.
-#' @param since_date A string with the start date of the search in \%d-\%m-\%Y format.
-#' @param until_date A string with the end date of the search in \%d-\%m-\%Y format.
+#' @param since_date A string with the start date of the search in '%d-%m-%Y' format.
+#' @param until_date A string with the end date of the search in '%d-%m-%Y' format.
 #' @param series_code A string with the series code wanted. The series code corresponds to the values of the `dmvariable` column in the data.frame output of the `get_series_category()` function.
 #' @param since_series_code A string with the first series code wanted. The series code corresponds to the values of the `dmvariable` column in the data.frame output of the `get_series_category()` function.
 #' @param until_series_code A string with the last series code wanted. The series code corresponds to the values of the `dmvariable` column in the data.frame output of the `get_series_category()` function.

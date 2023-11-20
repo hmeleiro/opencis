@@ -11,6 +11,6 @@ A data.frame.
 }
 \description{
 Retrieves the valid collection categories of CIS studies.
-The values of the `codigo` column can be used in the `collection_code`
-parameter of the `search_studies()` of `search_questions()` functions.
+The values of the \code{codigo} column can be used in the \code{collection_code}
+parameter of the \code{search_studies()} of \code{search_questions()} functions.
 }
