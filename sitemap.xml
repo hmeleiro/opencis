@@ -34,10 +34,16 @@
     <loc>https://hmeleiro.github.io/opencis/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://hmeleiro.github.io/opencis/reference/opencis-package.html</loc>
+  </url>
+  <url>
     <loc>https://hmeleiro.github.io/opencis/reference/read_cis.html</loc>
   </url>
   <url>
     <loc>https://hmeleiro.github.io/opencis/reference/read_series.html</loc>
+  </url>
+  <url>
+    <loc>https://hmeleiro.github.io/opencis/reference/read_series_microdata.html</loc>
   </url>
   <url>
     <loc>https://hmeleiro.github.io/opencis/reference/search_questions.html</loc>
