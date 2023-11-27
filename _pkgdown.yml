@@ -42,3 +42,8 @@ reference:
   desc:  Functions to retrieve the valid category values to narrow search queries.
 - contents:
   - starts_with("get_")
+- title: Miscellaneous
+  desc:  Other useful functions.
+- contents:
+  - downloadable_files
+  - browse_questionnaire

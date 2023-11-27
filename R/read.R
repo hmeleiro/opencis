@@ -23,10 +23,12 @@ read_cis <- function(study_code, verbose = FALSE) {
 
   if(nrow(savfile) == 1) {
     savfile <- unz(tmpfile, filename = savfile$Name)
-    data <- read_sav(savfile)
+    data <- read_sav(savfile, user_na = TRUE)
     return(data)
+  } else if(nrow(savfile) > 1) {
+    stop("Founded more than one sav file in zip file.")
   } else {
-    stop("No sav file found (or more than one exists in zip file)")
+    stop("No sav file found.")
   }
 }
 
@@ -49,7 +51,6 @@ read_series <- function(series_code) {
   data <- parse_response_series(res)
   return(data)
 }
-
 
 #' Import the individual-level data for CIS timeseries
 #'
