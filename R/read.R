@@ -11,6 +11,8 @@
 #' @return A list of length 2 with the following values: 1) data: a data.frame with the individual-level data points for the timeseries. 2) metadata: a data.frame with the series code and their corresponding name
 #'
 #' @export
+#'
+#' @example R/examples/read_cis.R
 read_cis <- function(study_code, verbose = FALSE) {
   BASEURL <- "https://www.cis.es/documents/d/cis/MD%s"
   url <- sprintf(BASEURL, study_code)
@@ -44,6 +46,8 @@ read_cis <- function(study_code, verbose = FALSE) {
 #' @return A data.frame.
 #'
 #' @export
+#'
+#' @example R/examples/read_series.R
 read_series <- function(series_code) {
   BASEURL <- "https://www.cis.es/o/cis/serie/%s"
   url <- sprintf(BASEURL, series_code)
@@ -66,6 +70,7 @@ read_series <- function(series_code) {
 #' @return A data.frame.
 #'
 #' @export
+#'
 read_series_microdata <- function(series_code, since_date = NULL, until_date = NULL) {
   studies <- series_study_codes(series_code, since_date, until_date)
   metadata <- studies$metadata

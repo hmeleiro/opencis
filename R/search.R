@@ -10,6 +10,7 @@
 #' @param study_code A string with the study code wanted.
 #' @param since_study_code A string with the first study code wanted.
 #' @param until_study_code A string with the last study code wanted.
+#' @param scope_code Scope level code of the survey sample ("001" for national level, "002" for autonomical comunity level, etc...)
 #'
 #' @importFrom httr POST
 #' @importFrom httr add_headers
@@ -22,9 +23,11 @@
 #' @return A data.frame.
 #'
 #' @export
+#'
+#' @example R/examples/search_studies.R
 search_studies <- function(search_terms= NULL, category_code = NULL, collection_code = NULL,
                            since_date = NULL, until_date = NULL, study_code = NULL,
-                           since_study_code = NULL, until_study_code = NULL) {
+                           since_study_code = NULL, until_study_code = NULL, scope_code = NULL) {
 
   if(!is.null(study_code)) {
     if(!is.null(since_study_code) | !is.null(until_study_code) ) {
@@ -46,7 +49,8 @@ search_studies <- function(search_terms= NULL, category_code = NULL, collection_
     cndFechaEstudioHasta = until_date,
     cndNumeroEstudioDesde = cndNumeroEstudioDesde,
     cndNumeroEstudioHasta = cndNumeroEstudioHasta,
-    cndColeccionCod = collection_code
+    cndColeccionCod = collection_code,
+    cndAmbitosCod = scope_code
   )
 
   res <- POST(BASEURL,
@@ -73,6 +77,7 @@ search_studies <- function(search_terms= NULL, category_code = NULL, collection_
 #' @param study_code A string with the study code wanted.
 #' @param since_study_code A string with the first study code wanted.
 #' @param until_study_code A string with the last study code wanted.
+#' @param scope_code Scope level code of the survey sample ("001" for national level, "002" for autonomical comunity level, etc...)
 #'
 #' @importFrom httr POST
 #' @importFrom httr add_headers
@@ -81,9 +86,11 @@ search_studies <- function(search_terms= NULL, category_code = NULL, collection_
 #' @return A data.frame.
 #'
 #' @export
+#'
+#' @example R/examples/search_questions.R
 search_questions <- function(search_terms = NULL, descriptor_code = NULL, collection_code = NULL,
                              since_date = NULL, until_date = NULL, study_code = NULL,
-                             since_study_code = NULL, until_study_code = NULL) {
+                             since_study_code = NULL, until_study_code = NULL,  scope_code = NULL) {
 
   if(!is.null(study_code)) {
     if(!is.null(since_study_code) | !is.null(until_study_code) ) {
@@ -105,7 +112,8 @@ search_questions <- function(search_terms = NULL, descriptor_code = NULL, collec
     cndFechaEstudioHasta = until_date,
     cndNumeroEstudioDesde = cndNumeroEstudioDesde,
     cndNumeroEstudioHasta = cndNumeroEstudioHasta,
-    cndPalabras = "" # This is a hack to avoid an empty response
+    cndPalabras = "", # This is a hack to avoid an empty response
+    cndAmbitosCod = scope_code
   )
 
   res <- POST(BASEURL,

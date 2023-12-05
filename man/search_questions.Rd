@@ -12,7 +12,8 @@ search_questions(
   until_date = NULL,
   study_code = NULL,
   since_study_code = NULL,
-  until_study_code = NULL
+  until_study_code = NULL,
+  scope_code = NULL
 )
 }
 \arguments{
@@ -31,10 +32,21 @@ search_questions(
 \item{since_study_code}{A string with the first study code wanted.}
 
 \item{until_study_code}{A string with the last study code wanted.}
+
+\item{scope_code}{Scope level code of the survey sample ("001" for national level, "002" for autonomical comunity level, etc...)}
 }
 \value{
 A data.frame.
 }
 \description{
 Searches for CIS questions using the CIS search engine.
+}
+\examples{
+# Search by search terms
+questions <- search_questions(search_terms = "feminismo")
+print(questions)
+
+# Narrow the search by dates
+questions <- search_questions(search_terms = "feminismo", since_date = "01-01-2010")
+print(questions)
 }

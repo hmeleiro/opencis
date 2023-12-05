@@ -12,7 +12,8 @@ search_studies(
   until_date = NULL,
   study_code = NULL,
   since_study_code = NULL,
-  until_study_code = NULL
+  until_study_code = NULL,
+  scope_code = NULL
 )
 }
 \arguments{
@@ -31,10 +32,30 @@ search_studies(
 \item{since_study_code}{A string with the first study code wanted.}
 
 \item{until_study_code}{A string with the last study code wanted.}
+
+\item{scope_code}{Scope level code of the survey sample ("001" for national level, "002" for autonomical comunity level, etc...)}
 }
 \value{
 A data.frame.
 }
 \description{
 Searches for CIS studies using the CIS search engine.
+}
+\examples{
+# Search by search terms
+studies <- search_studies(search_terms = "postelectoral")
+print(studies)
+
+# Narrow the search by dates
+studies <- search_studies(search_terms = "postelectoral",
+                          since_date = "01-01-2011",
+                          until_date = "01-01-2020")
+print(studies)
+
+# Use the scope_code parameter to search only national studies
+studies <- search_studies(search_terms = "postelectoral",
+                          since_date = "01-01-2011",
+                          until_date = "01-01-2020",
+                          scope_code = "001")
+print(studies)
 }
