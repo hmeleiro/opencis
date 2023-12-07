@@ -136,28 +136,63 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Search by search terms</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.info.html" class="external-link">Sys.info</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="st">"sysname"</span><span class="op">]</span> <span class="op">==</span> <span class="st">"Linux"</span><span class="op">)</span> <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/set_config.html" class="external-link">set_config</a></span><span class="op">(</span><span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/config.html" class="external-link">config</a></span><span class="op">(</span>ssl_verifypeer <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Search by search terms</span></span></span>
 <span class="r-in"><span><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu">search_studies</span><span class="op">(</span>search_terms <span class="op">=</span> <span class="st">"postelectoral"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in curl::curl_fetch_memory(url, handle = handle):</span> SSL peer certificate or SSH remote key was not OK: [www.cis.es] SSL certificate problem: unable to get local issuer certificate</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'studies' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 179 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       id codigo titulo                                                fecha     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                 <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> <span style="text-decoration: underline;">14</span>752 3420   BARÓMETRO DE SEPTIEMBRE 2023. POSTELECTORAL ELECCION… 2023-09-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> <span style="text-decoration: underline;">14</span>723 3410   BARÓMETRO DE JUNIO 2023. POSTELECTORAL ELECCIONES MU… 2023-06-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> <span style="text-decoration: underline;">14</span>642 3370   POSTELECTORAL ELECCIONES AUTONÓMICAS 2022. COMUNIDAD… 2022-06-21</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> <span style="text-decoration: underline;">14</span>614 3352   POSTELECTORAL ELECCIONES AUTONÓMICAS 2022. COMUNIDAD… 2022-02-14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> <span style="text-decoration: underline;">14</span>574 3328   POSTELECTORAL ELECCIONES AUTONÓMICAS 2021. COMUNIDAD… 2021-06-18</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> <span style="text-decoration: underline;">14</span>554 3314   POSTELECTORAL DE CATALUÑA. ELECCIONES AUTONÓMICAS 20… 2021-03-26</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> <span style="text-decoration: underline;">14</span>522 3293   POSTELECTORAL DEL PAÍS VASCO. ELECCIONES AUTONÓMICAS… 2020-09-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> <span style="text-decoration: underline;">14</span>523 3294   POSTELECTORAL DE GALICIA. ELECCIONES AUTONÓMICAS 2020 2020-09-08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> <span style="text-decoration: underline;">14</span>479 3269   BARÓMETRO DE DICIEMBRE 2019. POSTELECTORAL ELECCIONE… 2019-12-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> <span style="text-decoration: underline;">14</span>455 3253   POSTELECTORAL ELECCIONES AUTONÓMICAS Y MUNICIPALES 2… 2019-06-17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 169 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Narrow the search by dates</span></span></span>
 <span class="r-in"><span><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu">search_studies</span><span class="op">(</span>search_terms <span class="op">=</span> <span class="st">"postelectoral"</span>,</span></span>
 <span class="r-in"><span>                          since_date <span class="op">=</span> <span class="st">"01-01-2011"</span>,</span></span>
 <span class="r-in"><span>                          until_date <span class="op">=</span> <span class="st">"01-01-2020"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in curl::curl_fetch_memory(url, handle = handle):</span> SSL peer certificate or SSH remote key was not OK: [www.cis.es] SSL certificate problem: unable to get local issuer certificate</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'studies' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 53 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       id codigo titulo                                                fecha     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                 <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> <span style="text-decoration: underline;">14</span>479 3269   BARÓMETRO DE DICIEMBRE 2019. POSTELECTORAL ELECCIONE… 2019-12-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> <span style="text-decoration: underline;">14</span>455 3253   POSTELECTORAL ELECCIONES AUTONÓMICAS Y MUNICIPALES 2… 2019-06-17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> <span style="text-decoration: underline;">14</span>453 3248   POSTELECTORAL ELECCIONES GENERALES 2019               2019-05-10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> <span style="text-decoration: underline;">14</span>440 3236   POSTELECTORAL ELECCIONES AUTONÓMICAS 2018. COMUNIDAD… 2018-12-10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> <span style="text-decoration: underline;">14</span>378 3202   POSTELECTORAL DE CATALUÑA. ELECCIONES AUTONÓMICAS 20… 2017-12-28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> <span style="text-decoration: underline;">14</span>309 3154   POSTELECTORAL DEL PAÍS VASCO. ELECCIONES AUTONÓMICAS… 2016-09-28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> <span style="text-decoration: underline;">14</span>310 3155   POSTELECTORAL DE GALICIA. ELECCIONES AUTONÓMICAS 2016 2016-09-28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> <span style="text-decoration: underline;">14</span>291 3145   POSTELECTORAL ELECCIONES GENERALES 2016               2016-07-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> <span style="text-decoration: underline;">14</span>258 3126   POSTELECTORAL ELECCIONES GENERALES 2015. PANEL (2ª F… 2016-01-07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> <span style="text-decoration: underline;">14</span>268 7715   PREELECTORAL Y POSTELECTORAL ELECCIONES GENERALES 20… 2015-10-27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 43 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use the scope_code parameter to search only national studies</span></span></span>
 <span class="r-in"><span><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu">search_studies</span><span class="op">(</span>search_terms <span class="op">=</span> <span class="st">"postelectoral"</span>,</span></span>
 <span class="r-in"><span>                          since_date <span class="op">=</span> <span class="st">"01-01-2011"</span>,</span></span>
 <span class="r-in"><span>                          until_date <span class="op">=</span> <span class="st">"01-01-2020"</span>,</span></span>
 <span class="r-in"><span>                          scope_code <span class="op">=</span> <span class="st">"001"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in curl::curl_fetch_memory(url, handle = handle):</span> SSL peer certificate or SSH remote key was not OK: [www.cis.es] SSL certificate problem: unable to get local issuer certificate</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'studies' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 9 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      id codigo titulo                                                 fecha     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="text-decoration: underline;">14</span>479 3269   BARÓMETRO DE DICIEMBRE 2019. POSTELECTORAL ELECCIONES… 2019-12-01</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> <span style="text-decoration: underline;">14</span>455 3253   POSTELECTORAL ELECCIONES AUTONÓMICAS Y MUNICIPALES 20… 2019-06-17</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> <span style="text-decoration: underline;">14</span>453 3248   POSTELECTORAL ELECCIONES GENERALES 2019                2019-05-10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="text-decoration: underline;">14</span>291 3145   POSTELECTORAL ELECCIONES GENERALES 2016                2016-07-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="text-decoration: underline;">14</span>258 3126   POSTELECTORAL ELECCIONES GENERALES 2015. PANEL (2ª FA… 2016-01-07</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> <span style="text-decoration: underline;">14</span>268 7715   PREELECTORAL Y POSTELECTORAL ELECCIONES GENERALES 201… 2015-10-27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> <span style="text-decoration: underline;">14</span>083 3028   POSTELECTORAL ELECCIONES AL PARLAMENTO EUROPEO 2014    2014-05-29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> <span style="text-decoration: underline;">12</span>604 2920   POSTELECTORAL ELECCIONES GENERALES 2011. PANEL (2ª FA… 2011-11-24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">9</span> <span style="text-decoration: underline;">12</span>644 7711   PREELECTORAL Y POSTELECTORAL ELECCIONES GENERALES 201… 2011-10-06</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

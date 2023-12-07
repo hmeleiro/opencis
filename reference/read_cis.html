@@ -98,7 +98,8 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># If you know the study code you can just read it into R</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.info.html" class="external-link">Sys.info</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="st">"sysname"</span><span class="op">]</span> <span class="op">==</span> <span class="st">"Linux"</span><span class="op">)</span> <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/set_config.html" class="external-link">set_config</a></span><span class="op">(</span><span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/config.html" class="external-link">config</a></span><span class="op">(</span>ssl_verifypeer <span class="op">=</span> <span class="fl">0L</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># If you know the study code you can just read it into R</span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_cis</span><span class="op">(</span><span class="st">"3328"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>URL 'https://www.cis.es/documents/d/cis/MD3328': status was 'SSL peer certificate or SSH remote key was not OK'</span>
 <span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in download.file(url, tmpfile, mode = "wb", quiet = ifelse(verbose,     FALSE, TRUE)):</span> cannot open URL 'https://www.cis.es/documents/d/cis/MD3328'</span>
@@ -109,17 +110,20 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>         .Call(C_df, x, df1, df2, log)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     else .Call(C_dnf, x, df1, df2, ncp, log)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5563a0fee878&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55b2ed62f238&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:stats&gt;</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># If you dont know the study code, you can search for a study using search_studies() function:</span></span></span>
 <span class="r-in"><span><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu"><a href="search_studies.html">search_studies</a></span><span class="op">(</span>search_terms <span class="op">=</span> <span class="st">"gastronomia"</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in curl::curl_fetch_memory(url, handle = handle):</span> SSL peer certificate or SSH remote key was not OK: [www.cis.es] SSL certificate problem: unable to get local issuer certificate</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'studies' not found</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      id codigo titulo                fecha     </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> <span style="text-decoration: underline;">14</span>739 3419   TURISMO Y GASTRONOMÍA 2023-07-31</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_cis</span><span class="op">(</span><span class="va">studies</span><span class="op">$</span><span class="va">codigo</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'studies' not found</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>URL 'https://www.cis.es/documents/d/cis/MD3419': status was 'SSL peer certificate or SSH remote key was not OK'</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in download.file(url, tmpfile, mode = "wb", quiet = ifelse(verbose,     FALSE, TRUE)):</span> cannot open URL 'https://www.cis.es/documents/d/cis/MD3419'</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> function (x, df1, df2, ncp, log = FALSE) </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
@@ -127,7 +131,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>         .Call(C_df, x, df1, df2, log)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     else .Call(C_dnf, x, df1, df2, ncp, log)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x5563a0fee878&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;bytecode: 0x55b2ed62f238&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: namespace:stats&gt;</span>
 </code></pre></div>
     </div>
