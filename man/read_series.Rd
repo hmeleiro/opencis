@@ -16,7 +16,7 @@ A data.frame.
 Download and import the data of a CIS timeseries.
 }
 \examples{
-\dontshow{if(Sys.info()["sysname"] == "Linux") httr::set_config(httr::config(ssl_verifypeer = 0L))}
+\dontshow{httr::set_config(httr::config(ssl_verifypeer = 0L))}
 # Use the search_series() function to find a timeserie to import
 series <- search_series("presidente preferido")
 series

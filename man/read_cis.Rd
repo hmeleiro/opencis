@@ -18,7 +18,7 @@ A list of length 2 with the following values: 1) data: a data.frame with the ind
 Download and import the data of a CIS study.
 }
 \examples{
-\dontshow{if(Sys.info()["sysname"] == "Linux") httr::set_config(httr::config(ssl_verifypeer = 0L))}
+\dontshow{httr::set_config(httr::config(ssl_verifypeer = 0L))}
 # If you know the study code you can just read it into R
 df <- read_cis("3328")
 print(df)
