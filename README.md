@@ -187,3 +187,18 @@ print(df_series)
 #> #   X.N. <dbl>
 #> # ℹ Use `print(n = ...)` to see more rows
 ```
+
+
+## SSL certificate error on Ubuntu
+Due to an issue with the SSL certificate of CIS website the following error may be thrown on Ubuntu systems:
+```
+SSL peer certificate or SSH remote key was not OK: [www.cis.es] SSL certificate problem: unable to get local issuer certificate
+```
+
+To solve this problem the user must disable the SSL peer verification option. To do so the following command must be run once in each session:
+
+```
+httr::set_config(httr::config(ssl_verifypeer = 0L))
+```
+
+I understand that disabling the SSL peer verification option is not ideal as it may be a security risk, but this is not an `opencis` issue, it's a problem on the CIS end side. It has to do with the security certificate presented by the CIS website not been issued by a trusted certificate authority.
