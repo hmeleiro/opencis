@@ -1,3 +1,5 @@
+print(Sys.info())
+print(Sys.info()["sysname"])
 \dontshow{if(Sys.info()["sysname"] == "Linux") httr::set_config(httr::config(ssl_verifypeer = 0L))}
 # If you know the study code you can just read it into R
 df <- read_cis("3328")
