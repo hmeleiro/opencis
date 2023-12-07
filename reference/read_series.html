@@ -92,6 +92,20 @@
 <p>A data.frame.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Use the search_series() function to find a timeserie to import</span></span></span>
+<span class="r-in"><span><span class="va">series</span> <span class="op">&lt;-</span> <span class="fu"><a href="search_series.html">search_series</a></span><span class="op">(</span><span class="st">"presidente preferido"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in curl::curl_fetch_memory(url, handle = handle):</span> SSL peer certificate or SSH remote key was not OK: [www.cis.es] SSL certificate problem: unable to get local issuer certificate</span>
+<span class="r-in"><span><span class="va">series</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'series' not found</span>
+<span class="r-in"><span><span class="co"># Use the value in the id column of the search_series() output</span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">read_series</span><span class="op">(</span>series_code <span class="op">=</span> <span class="va">series</span><span class="op">$</span><span class="va">id</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'series' not found</span>
+<span class="r-in"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> function (x, df1, df2, ncp, log = FALSE)  </span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
