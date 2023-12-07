@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-# Necessary in order to pass the re-building of the vignette step of the R-CMD-check action for Ubuntu systems
+# Necessary in order to pass the re-building of the vignette step of the R-CMD-check action on Ubuntu systems
 if(Sys.info()["sysname"] == "Linux") {
   httr::set_config(httr::config(ssl_verifypeer = 0L)) 
 }

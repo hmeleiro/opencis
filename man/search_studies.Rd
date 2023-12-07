@@ -42,6 +42,7 @@ A data.frame.
 Searches for CIS studies using the CIS search engine.
 }
 \examples{
+\dontshow{if(Sys.info()["sysname"] == "Linux") httr::set_config(httr::config(ssl_verifypeer = 0L))}
 # Search by search terms
 studies <- search_studies(search_terms = "postelectoral")
 print(studies)
