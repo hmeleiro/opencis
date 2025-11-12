@@ -12,5 +12,5 @@ Functions to import data from the CIS archive.
 Functions to search for studies, questions and timeseries in the CIS
 archive.
 
-- [`search_studies()`](https://hmeleiro.github.io/opencis/reference/search_studies.md)
+- [`search_cis()`](https://hmeleiro.github.io/opencis/reference/search_cis.md)
   : Search for CIS studies.
