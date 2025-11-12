@@ -26,8 +26,8 @@ Download and import the data of a CIS study.
 df <- read_cis("3328")
 print(df)
 
-# If you dont know the study code, you can search for a study using search_studies() function:
-studies <- search_studies(q = "gastronomia")
+# If you dont know the study code, you can search for a study using search_cis() function:
+studies <- search_cis(q = "gastronomia")
 print(studies)
 
 df <- read_cis(studies$estudio[1])

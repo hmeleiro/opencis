@@ -19,6 +19,7 @@ read_cis <- function(study_code, verbose = FALSE) {
   return(data)
 }
 
+
 #' Download and read a CIS study from a given URL
 #'
 #' @param url A string with the URL of the CIS study page.

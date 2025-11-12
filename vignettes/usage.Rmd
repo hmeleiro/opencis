@@ -33,13 +33,13 @@ The first function is used to search for surveys, survey questions and data seri
 library(opencis)
 
 # Search for survey studies
-search_studies(q = "preelectoral", from = "2020-01-01", to = "2023-11-17")
+search_cis(q = "preelectoral", from = "2020-01-01", to = "2023-11-17")
 
 # Search for survey questions
-search_studies(q = "feminismo", catalogo = "pregunta")
+search_cis(q = "feminismo", catalogo = "pregunta")
 
 # Search for data series
-search_studies(q = "situación económica", catalogo = "serie")
+search_cis(q = "situación económica", catalogo = "serie")
 ```
 
 The second function is used to import the data directly into R.
