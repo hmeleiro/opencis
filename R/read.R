@@ -8,17 +8,37 @@
 #' @importFrom haven read_sav
 #' @importFrom utils download.file unzip
 #'
-#' @return A list of length 2 with the following values: 1) data: a data.frame with the individual-level data points for the timeseries. 2) metadata: a data.frame with the series code and their corresponding name
+#' @return A data.frame with the study data.
 #'
 #' @export
 #'
 #' @example R/examples/read_cis.R
 read_cis <- function(study_code, verbose = FALSE) {
-  BASEURL <- "https://www.cis.es/documents/d/cis/MD%s"
-  url <- sprintf(BASEURL, study_code)
+  url <- get_study_url(study_code)
+  data <- download_study(url)
+  return(data)
+}
+
+#' Download and read a CIS study from a given URL
+#'
+#' @param url A string with the URL of the CIS study page.
+#'
+#' @keywords internal
+download_study <- function(url) {
+
+  html <- content(
+    GET(url),
+    as = "text", encoding = "UTF-8"
+  )
+  zip_url <- find_url(html)
 
   tmpfile <- tempfile(fileext = ".zip")
-  download.file(url, tmpfile, mode = "wb", quiet = ifelse(verbose, FALSE, TRUE))
+  resp_zip <- GET(
+    zip_url,
+    write_disk(tmpfile, overwrite = TRUE)
+  )
+
+  stop_for_status(resp_zip)
 
   files_in_zip <- unzip(tmpfile, list = TRUE)
   savfile <- files_in_zip[grepl("\\.sav$", files_in_zip$Name),]
@@ -34,55 +54,36 @@ read_cis <- function(study_code, verbose = FALSE) {
   }
 }
 
-#' Import a CIS timeseries
+#' Find CIS study data URL in HTML content
 #'
-#' Download and import the data of a CIS timeseries.
+#' Searches for the URL of the CIS study data ZIP file within the provided HTML content.
 #'
-#' @param series_code A string with the timeseries code.
+#' @param html A character string containing the HTML content to search.
+#' @param ids An optional vector of two strings representing the numeric subroutes of the URL
+#'           (e.g., c("3411", "3411") for "https://www.cis.es/documents/3411/3411/MD3411.zip").
+#'           If NULL, the function searches for any valid CIS study data URL.
+#' @param allow_uuid A boolean indicating whether to allow UUIDs in the URL.
+#'                  Defaults to FALSE.
 #'
-#' @importFrom httr GET
-#' @importFrom haven read_sav
+#' @return A character vector of unique URLs found in the HTML content.
 #'
-#' @return A data.frame.
-#'
-#' @export
-#'
-#' @example R/examples/read_series.R
-read_series <- function(series_code) {
-  BASEURL <- "https://www.cis.es/o/cis/serie/%s"
-  url <- sprintf(BASEURL, series_code)
-  res <- GET(url)
-  data <- parse_response_series(res)
-  return(data)
-}
+#' @keywords internal
+find_url <- function(html,
+                     ids = NULL, # subrutas numéricas
+                     allow_uuid = FALSE) {
+  stopifnot(is.character(html), length(html) == 1)
 
-#' Import the individual-level data for CIS timeseries
-#'
-#' `r lifecycle::badge("experimental")` Download and import the individual-level data for a CIS timeseries.
-#'
-#' @param series_code A string (or a character vector) with the timeseries codes.
-#' @param since_date A string with the start date of the search in '%d-%m-%Y' format.
-#' @param until_date A string with the end date of the search in '%d-%m-%Y' format.
-#'
-#' @importFrom purrr map_df
-#' @importFrom haven read_sav
-#'
-#' @return A data.frame.
-#'
-#' @export
-#'
-read_series_microdata <- function(series_code, since_date = NULL, until_date = NULL) {
-  studies <- series_study_codes(series_code, since_date, until_date)
-  metadata <- studies$metadata
-  studies <- studies$data
-  study_ids <- unique(studies$study_code)
-
-  if(length(study_ids) >  70) {
-    cat("Downloading", length(study_ids), "studies from CIS. Make some coffee, this may take a while.")
+  base_pat <- if (is.null(ids)) {
+    "https://www\\.cis\\.es/documents/\\d+/\\d+/"
   } else {
-    cat("Downloading", length(study_ids), "studies from CIS.")
+    sprintf("https://www\\.cis\\.es/documents/%s/%s/", ids[1], ids[2])
   }
-  data <- map_df(study_ids, series_microdata, studies = studies)
-  return(list(data = data, metadata = metadata))
-}
 
+  md_part   <- "MD\\d+\\.zip"
+  uuid_part <- if (allow_uuid) "(?:/[A-Za-z0-9-]+)?" else ""
+
+  pat <- paste0(base_pat, md_part, uuid_part)
+
+  out <- unlist(str_extract_all(html, pat))
+  unique(out[!is.na(out) & nzchar(out)])
+}

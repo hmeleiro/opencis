@@ -12,21 +12,24 @@ read_cis(study_code, verbose = FALSE)
 \item{verbose}{boolean. Controls the messages printed on the console.}
 }
 \value{
-A list of length 2 with the following values: 1) data: a data.frame with the individual-level data points for the timeseries. 2) metadata: a data.frame with the series code and their corresponding name
+A data.frame with the study data.
 }
 \description{
 Download and import the data of a CIS study.
 }
 \examples{
-\dontshow{httr::set_config(httr::config(ssl_verifypeer = 0L))}
+\dontshow{
+  httr::set_config(httr::config(ssl_verifypeer = 0L))
+  options(download.file.method="curl", download.file.extra="-k -L")
+}
 # If you know the study code you can just read it into R
 df <- read_cis("3328")
 print(df)
 
 # If you dont know the study code, you can search for a study using search_studies() function:
-studies <- search_studies(search_terms = "gastronomia")
+studies <- search_studies(q = "gastronomia")
 print(studies)
 
-df <- read_cis(studies$codigo[1])
+df <- read_cis(studies$estudio[1])
 print(df)
 }

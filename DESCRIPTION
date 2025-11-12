@@ -16,13 +16,12 @@ Depends:
     R (>= 3.5.0)
 Imports:
     httr (>= 1.4.7),
-    dplyr (>= 1.0.0),
     tibble (>= 3.0.0),
     purrr (>= 1.0.0),
-    rlang (>= 1.0.0),
     haven (>= 2.5.3),
-    janitor (>= 1.1.1),
-    gsubfn (>= 0.7.0),
+    magrittr (>= 2.0.0),
+    rvest (>= 1.0.0),
+    stringr (>= 1.0.0),
     lifecycle
 URL: https://hmeleiro.github.io/opencis/
 Suggests: 

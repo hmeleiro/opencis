@@ -5,38 +5,33 @@
 \title{Search for CIS studies.}
 \usage{
 search_studies(
-  search_terms = NULL,
-  category_code = NULL,
-  collection_code = NULL,
-  since_date = NULL,
-  until_date = NULL,
-  study_code = NULL,
-  since_study_code = NULL,
-  until_study_code = NULL,
-  scope_code = NULL
+  start = 1,
+  q = "",
+  from = NULL,
+  to = NULL,
+  sort = "relevance",
+  catalogo = "estudio",
+  ...
 )
 }
 \arguments{
-\item{search_terms}{A string with the search terms.}
+\item{start}{Integer. The starting page for the search results. Default is 1, iterate to get more results.}
 
-\item{category_code}{A string (or a character vector if more than one) with the category code. The category code corresponds to the values of the \code{codigo} column in the data.frame output of the \code{get_study_categories()} function.}
+\item{q}{String. The search query. Default is an empty string.}
 
-\item{collection_code}{A string (or a character vector if more than one) with the collection code. The collection code corresponds to the values of the \code{codigo} column in the data.frame output of the \code{get_study_colections()} function.}
+\item{from}{Date or NULL. The start date for filtering results. Default is NULL. The date format must be "YYYY-MM-DD".}
 
-\item{since_date}{A string with the start date of the search in '\%d-\%m-\%Y' format.}
+\item{to}{Date or NULL. The end date for filtering results. Default is NULL. The date format must be "YYYY-MM-DD".}
 
-\item{until_date}{A string with the end date of the search in '\%d-\%m-\%Y' format.}
+\item{sort}{String. The sorting order for the results ("publishDate-", "publishDate+", "relevance").
+Default is "relevance".}
 
-\item{study_code}{A string with the study code wanted.}
+\item{catalogo}{String. The catalog type ("estudio", "pregunta", "serie"). Default is "estudio".}
 
-\item{since_study_code}{A string with the first study code wanted.}
-
-\item{until_study_code}{A string with the last study code wanted.}
-
-\item{scope_code}{Scope level code of the survey sample ("001" for national level, "002" for autonomical comunity level, etc...)}
+\item{...}{Additional parameters (not used).}
 }
 \value{
-A data.frame.
+A data.frame with the search results.
 }
 \description{
 Searches for CIS studies using the CIS search engine.
@@ -44,19 +39,19 @@ Searches for CIS studies using the CIS search engine.
 \examples{
 \dontshow{httr::set_config(httr::config(ssl_verifypeer = 0L))}
 # Search by search terms
-studies <- search_studies(search_terms = "postelectoral")
+studies <- search_studies(q = "postelectoral")
 print(studies)
 
 # Narrow the search by dates
-studies <- search_studies(search_terms = "postelectoral",
-                          since_date = "01-01-2011",
-                          until_date = "01-01-2020")
+studies <- search_studies(q = "postelectoral",
+                          from = "2011-01-01",
+                          to = "2020-01-01")
 print(studies)
 
-# Use the scope_code parameter to search only national studies
-studies <- search_studies(search_terms = "postelectoral",
-                          since_date = "01-01-2011",
-                          until_date = "01-01-2020",
-                          scope_code = "001")
+# Use the catalogo parameter to search for questions ("pregunta") or data series ("serie")
+studies <- search_studies(q = "ideologia",
+                          from = "2011-01-01",
+                          to = "2020-01-01",
+                          catalogo = "serie")
 print(studies)
 }

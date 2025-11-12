@@ -2,182 +2,186 @@
 #'
 #' Searches for CIS studies using the CIS search engine.
 #'
-#' @param search_terms A string with the search terms.
-#' @param category_code A string (or a character vector if more than one) with the category code. The category code corresponds to the values of the `codigo` column in the data.frame output of the `get_study_categories()` function.
-#' @param collection_code A string (or a character vector if more than one) with the collection code. The collection code corresponds to the values of the `codigo` column in the data.frame output of the `get_study_colections()` function.
-#' @param since_date A string with the start date of the search in '%d-%m-%Y' format.
-#' @param until_date A string with the end date of the search in '%d-%m-%Y' format.
-#' @param study_code A string with the study code wanted.
-#' @param since_study_code A string with the first study code wanted.
-#' @param until_study_code A string with the last study code wanted.
-#' @param scope_code Scope level code of the survey sample ("001" for national level, "002" for autonomical comunity level, etc...)
+#' @param start Integer. The starting page for the search results. Default is 1, iterate to get more results.
+#' @param q String. The search query. Default is an empty string.
+#' @param from Date or NULL. The start date for filtering results. Default is NULL. The date format must be "YYYY-MM-DD".
+#' @param to Date or NULL. The end date for filtering results. Default is NULL. The date format must be "YYYY-MM-DD".
+#' @param sort String. The sorting order for the results ("publishDate-", "publishDate+", "relevance").
+#' Default is "relevance".
+#' @param catalogo String. The catalog type ("estudio", "pregunta", "serie"). Default is "estudio".
+#' @param ... Additional parameters (not used).
 #'
-#' @importFrom httr POST
-#' @importFrom httr add_headers
-#' @importFrom dplyr mutate
-#' @importFrom dplyr arrange
-#' @importFrom dplyr desc
-#' @importFrom rlang .data
-#'
-#'
-#' @return A data.frame.
+#' @return A data.frame with the search results.
 #'
 #' @export
 #'
 #' @example R/examples/search_studies.R
-search_studies <- function(search_terms= NULL, category_code = NULL, collection_code = NULL,
-                           since_date = NULL, until_date = NULL, study_code = NULL,
-                           since_study_code = NULL, until_study_code = NULL, scope_code = NULL) {
+search_studies <- function(
+    start    = 1,
+    q        = "",
+    from     = NULL,   # Date o NULL
+    to       = NULL,   # Date o NULL
+    sort     = "relevance",
+    catalogo = "estudio",
+    ...
+) {
 
-  if(!is.null(study_code)) {
-    if(!is.null(since_study_code) | !is.null(until_study_code) ) {
-      message("If study_code is specified, since_study_code and until_study_code are ignored")
-    }
-    cndNumeroEstudioDesde <- study_code
-    cndNumeroEstudioHasta <- study_code
+  args <- as.list(environment(), all=TRUE)
+  url <- do.call(cis_catalog_url_date, args)
+
+  resp <- GET(url)
+
+  if(status_code(resp) == 200) {
+
+    html <- content(resp, "parsed")
+    a <-
+      html %>%
+      html_elements(".card-content") %>%
+      html_element("a")
+
+
+    titles <- html_attr(a, name = "title")
+    urls <- html_attr(a, "href")
+
+
+    card_info <- html %>%
+      html_elements(".card-content") %>%
+      html_element(".card-info")
+
+    card_info <-
+      map(card_info, function(x) {
+        fecha <- html_elements(x, "li")[1]
+        estudio <- html_elements(x, "li")[2]
+        fecha <- html_text(fecha)
+        fecha <- as.Date(fecha, "%d/%m/%Y")
+        estudio <- html_text(estudio)
+        estudio <- gsub("Estudio ", "", estudio)
+        tibble(estudio, fecha)
+      }) %>%
+      list_rbind()
+
+
+    out <- tibble(
+      title = titles,
+      url = urls
+    )
+    out <- cbind(card_info, out)
+    out <- as_tibble(out)
   } else {
-    cndNumeroEstudioDesde <- since_study_code
-    cndNumeroEstudioHasta <- until_study_code
+    NULL
   }
 
-  BASEURL <- "https://www.cis.es/o/cis/estudios"
-  body <- list(
-    registrosPorPagina = -1,
-    cndPalabras = search_terms,
-    cndTematicoCod = category_code,
-    cndFechaEstudioDesde = since_date,
-    cndFechaEstudioHasta = until_date,
-    cndNumeroEstudioDesde = cndNumeroEstudioDesde,
-    cndNumeroEstudioHasta = cndNumeroEstudioHasta,
-    cndColeccionCod = collection_code,
-    cndAmbitosCod = scope_code
-  )
-
-  res <- POST(BASEURL,
-              add_headers("Origin" = "https://www.cis.es",
-                          "Referer" = "https://www.cis.es/catalogo-estudios/resultados-definidos/buscador-estudios"),
-              body=body,
-              encode = "form")
-  data <- parse_response(res)
-  data <- data |>
-    mutate(fecha = as.Date(.data$fecha, format = "%d-%m-%Y")) |>
-    arrange(desc(.data$fecha))
-  return(data)
+  return(out)
 }
 
-#' Search for CIS questions.
+#' Get the URL of a CIS study
 #'
-#' Searches for CIS questions using the CIS search engine.
+#' Retrieves the URL of a specific CIS study using its study ID.
 #'
-#' @param search_terms A string with the search terms.
-#' @param descriptor_code A string (or a character vector if more than one) with the descriptor code. The descriptor code corresponds to the values of the `codigo` column in the data.frame output of the `get_question_categories()` function.
-#' @param collection_code A string (or a character vector if more than one) with the collection code. The collection code corresponds to the values of the `codigo` column in the data.frame output of the `get_study_colections()` function.
-#' @param since_date A string with the start date of the search in '%d-%m-%Y' format.
-#' @param until_date A string with the end date of the search in '%d-%m-%Y' format.
-#' @param study_code A string with the study code wanted.
-#' @param since_study_code A string with the first study code wanted.
-#' @param until_study_code A string with the last study code wanted.
-#' @param scope_code Scope level code of the survey sample ("001" for national level, "002" for autonomical comunity level, etc...)
+#' @param study_code A string with the study ID.
 #'
-#' @importFrom httr POST
-#' @importFrom httr add_headers
-#' @importFrom dplyr mutate arrange desc
+#' @return A string with the URL of the study, or NULL if not found.
 #'
-#' @return A data.frame.
-#'
-#' @export
-#'
-#' @example R/examples/search_questions.R
-search_questions <- function(search_terms = NULL, descriptor_code = NULL, collection_code = NULL,
-                             since_date = NULL, until_date = NULL, study_code = NULL,
-                             since_study_code = NULL, until_study_code = NULL,  scope_code = NULL) {
+#' @keywords internal
+get_study_url <- function(study_code) {
+  URL_BASE <- "https://www.cis.es/es/estudios/catalogo?catalogo=estudio&sort=publishDate-&t=0&q=%s"
+  url <- sprintf(URL_BASE, study_code)
+  resp <- GET(url)
 
-  if(!is.null(study_code)) {
-    if(!is.null(since_study_code) | !is.null(until_study_code) ) {
-      message("If study_code is specified, since_study_code and until_study_code are ignored")
-    }
-    cndNumeroEstudioDesde <- study_code
-    cndNumeroEstudioHasta <- study_code
-  } else {
-    cndNumeroEstudioDesde <- since_study_code
-    cndNumeroEstudioHasta <- until_study_code
+  studies <- search_studies(q = study_code)
+
+  if(nrow(studies) == 0 ){
+    message("No study found.")
+    return(NULL)
   }
 
-  BASEURL <- "https://www.cis.es/o/cis/preguntas"
-  body <- list(
-    registrosPorPagina = 5000,
-    cndPalabrasPre = search_terms,
-    cndDescriptoresCod = paste0(descriptor_code, collapse =  ","),
-    cndFechaEstudioDesde = since_date,
-    cndFechaEstudioHasta = until_date,
-    cndNumeroEstudioDesde = cndNumeroEstudioDesde,
-    cndNumeroEstudioHasta = cndNumeroEstudioHasta,
-    cndPalabras = "", # This is a hack to avoid an empty response
-    cndAmbitosCod = scope_code
-  )
 
-  res <- POST(BASEURL,
-              add_headers("Content-Type" = "application/x-www-form-urlencoded;charset=UTF-8"),
-              body = body, encode = "form")
-  data <- parse_response(res)
+  match_study <- studies[studies$estudio == study_code, ]
 
+  if(nrow(match_study) > 1) {
+    message("More than one study found. Returning the first one.")
+    return(match_study$url[1])
+  }
 
-  data <- data |>
-    mutate(fecha_estudio = as.Date(.data$fecha_estudio, format = "%d-%m-%Y")) |>
-    arrange(desc(.data$fecha_estudio))
-  return(data)
+  if(nrow(match_study) == 0 ){
+    message("No study found.")
+    return(NULL)
+  }
+
+  return(match_study$url)
+
 }
 
-#' Search for CIS timeseries
-#'
-#' Searches for CIS timeseries using the CIS search engine.
-#'
-#' @param search_terms A string with the search terms.
-#' @param subject_code A string (or a character vector if more than one) with the subject code. The subject code corresponds to the values of the `dmindex` column in the data.frame output of the `get_series_category()` function.
-#' @param since_date A string with the start date of the search in '%d-%m-%Y' format.
-#' @param until_date A string with the end date of the search in '%d-%m-%Y' format.
-#' @param series_code A string with the series code wanted. The series code corresponds to the values of the `dmvariable` column in the data.frame output of the `get_series_category()` function.
-#' @param since_series_code A string with the first series code wanted. The series code corresponds to the values of the `dmvariable` column in the data.frame output of the `get_series_category()` function.
-#' @param until_series_code A string with the last series code wanted. The series code corresponds to the values of the `dmvariable` column in the data.frame output of the `get_series_category()` function.
-#'
-#' @importFrom httr POST
-#' @importFrom httr add_headers
-#' @importFrom dplyr mutate
-#' @importFrom dplyr arrange
-#' @importFrom dplyr desc
-#'
-#'
-#' @return A data.frame.
-#'
-#' @export
-search_series <- function(search_terms = NULL, subject_code = NULL,
-                          since_date = NULL, until_date = NULL, series_code = NULL,
-                          since_series_code = NULL, until_series_code = NULL) {
 
-  if(!is.null(series_code)) {
-    if(!is.null(since_series_code) | !is.null(until_series_code) ) {
-      message("If series_code is specified, since_series_code and until_series_code are ignored")
-    }
-    cndCodigoSerieDesde <- series_code
-    cndCodigoSerieHasta <- series_code
-  } else {
-    cndCodigoSerieDesde <- since_series_code
-    cndCodigoSerieHasta <- until_series_code
+#' Build CIS catalog URL with date range
+#'
+#' Constructs a URL for querying the CIS catalog with optional date range filters.
+#'
+#' @param start Integer. The starting page for the search results. Default is 1, iterate to get more results.
+#' @param q String. The search query. Default is an empty string.
+#' @param from Date or NULL. The start date for filtering results. Default is NULL
+#' @param to Date or NULL. The end date for filtering results. Default is NULL.
+#' @param sort String. The sorting order for the results ("publishDate-", "publishDate+", "relevance").
+#' Default is "relevance".
+#' @param catalogo String. The catalog type ("estudio", "pregunta", "serie"). Default is "estudio".
+#' @param ... Additional parameters (not used).
+#'
+#' @return A string representing the constructed URL.
+#'
+#' @keywords internal
+cis_catalog_url_date <- function(
+    start    = 1,
+    q        = "",
+    from     = NULL,   # Date o NULL
+    to       = NULL,   # Date o NULL
+    sort     = "relevance",
+    catalogo = "estudio",
+    ...
+) {
+
+  if(sort == "relevance") {
+    sort <- ""
   }
 
-  BASEURL <- "https://www.cis.es/o/cis/series"
-  body <- list(
-    registrosPorPagina = -1,
-    cndTituloSerie = search_terms,
-    cndFechaEstudioDesde = since_date,
-    cndFechaEstudioHasta = until_date,
-    cndCodigoSerieDesde = cndCodigoSerieDesde,
-    cndCodigoSerieHasta = cndCodigoSerieHasta,
-    cndTemasCod = subject_code
+  base <- "https://www.cis.es/es/estudios/catalogo"
+
+  # Construir from / fromDate
+  if (!is.null(from)) {
+    from <- as.Date(from)
+    stopifnot(inherits(from, "Date"))
+    from_str      <- format(from, "%Y-%m-%d")
+    from_range    <- sprintf("[%s000000 now]", format(from, "%Y%m%d"))
+    fromDate_val  <- from_str
+  } else {
+    from_range    <- ""
+    fromDate_val  <- ""
+  }
+
+  # Construir to / toDate
+  if (!is.null(to)) {
+    to <- as.Date(to)
+    stopifnot(inherits(to, "Date"))
+    to_str        <- format(to, "%Y-%m-%d")
+    # Aquí puedes ajustar la lógica según cómo quieras el rango.
+    # Ejemplo: desde hace 100 años hasta 'to' a las 23:59:59
+    to_range      <- sprintf("[now-100y %s235959]", format(to, "%Y%m%d"))
+    toDate_val    <- to_str
+  } else {
+    # Sin límite explícito: mismo comportamiento raro/flexible que usan ellos
+    to_range      <- "[now-100y ]"
+    toDate_val    <- ""
+  }
+
+  params <- list(
+    start     = start,
+    q         = q,
+    fromDate  = fromDate_val,
+    from      = from_range,
+    toDate    = toDate_val,
+    to        = to_range,
+    sort      = sort,
+    catalogo  = catalogo
   )
-  res <- POST(BASEURL,
-              add_headers("Content-Type" = "application/x-www-form-urlencoded;charset=UTF-8"),
-              body = body, encode = "form")
-  data <- parse_response(res)
-  return(data)
+
+  modify_url(base, query = params)
 }

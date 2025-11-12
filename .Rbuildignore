@@ -6,3 +6,5 @@
 ^pkgdown$
 ^\.github$
 ^new-features$
+^doc$
+^Meta$

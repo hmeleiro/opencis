@@ -13,61 +13,40 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-# Necessary in order to pass the re-building of the vignette step of the R-CMD-check action on Ubuntu systems
-if(Sys.info()["sysname"] == "Linux") {
-  httr::set_config(httr::config(ssl_verifypeer = 0L)) 
-}
 ```
 
 ## Installation
 
 You can install `opencis` from Github using the `devtools` package:
 
-``` {r, eval=FALSE}
+```{r, eval=FALSE}
 devtools::install_github("hmeleiro/opencis")
 ```
 
-
 ## Usage
 
-The package includes three group of functions. 
+The package includes two functions.
 
-The first group is used to search for surveys, survey questions and timeseries. 
+The first function is used to search for surveys, survey questions and data series
 
-``` {r}
+```{r}
 library(opencis)
 
 # Search for survey studies
-search_studies(search_terms = "preelectoral", since_date = "01-01-2020", until_date = "17-11-2023")
+search_studies(q = "preelectoral", from = "2020-01-01", to = "2023-11-17")
 
 # Search for survey questions
-search_questions(search_terms = "feminismo")
+search_studies(q = "feminismo", catalogo = "pregunta")
 
-# Search for timeseries
-search_series(search_terms = "situación económica")
+# Search for data series
+search_studies(q = "situación económica", catalogo = "serie")
 ```
 
-The second group of functions retrieves the valid category codes to narrow search queries. [Read the documentation](https://hmeleiro.github.io/opencis/reference/index.html#retrieve-categories) to understand how to use the category codes in the search functions.
+The second function is used to import the data directly into R.
 
-``` {r}
-get_study_categories()
-
-get_question_categories()
-
-get_series_category()
-
-```
-
-
-The third group of functions are used to import the data directly into R. 
-
-```{undefined warning=FALSE}
+```{r}
 # Read a survey study
-df <- read_cis("3411")
+df <- read_cis(3411)
 print(df)
 
-
-# Read a timeseries
-df_series <- read_series("2092")
-print(df_series)
 ```
