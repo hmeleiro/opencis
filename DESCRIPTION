@@ -30,4 +30,4 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-Config/Needs/website: hmeleiro/spain_electoral_theme
+Config/Needs/website: hmeleiro/spainelectoraltheme
