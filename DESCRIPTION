@@ -26,6 +26,8 @@ Imports:
 URL: https://hmeleiro.github.io/opencis/
 Suggests: 
     knitr,
+    pkgdown,
     rmarkdown
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
+Config/Needs/website: hmeleiro/spain-electoral-theme

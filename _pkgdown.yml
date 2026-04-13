@@ -1,6 +1,6 @@
 url: https://hmeleiro.github.io/opencis
 template:
-  package: preferably
+  package: spain-electoral-theme
   bootstrap: 5
 lang: en
 navbar:
