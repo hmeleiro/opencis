@@ -13,7 +13,7 @@ Search and import data directly to R from the Spanish Sociological Research Cent
 You can install `opencis` from Github using the `devtools` package:
 
 ``` r
-devtools::install_github("hmeleiro/opencis")
+remotes::install_github("hmeleiro/opencis")
 ```
 
 ## Usage
