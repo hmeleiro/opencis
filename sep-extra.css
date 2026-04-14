@@ -3,8 +3,13 @@
    Design tokens mirror spainelectoralproject.com
    ============================================================ */
 
+/* --- Google Fonts ------------------------------------------ */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
 /* --- Design tokens ----------------------------------------- */
 :root {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
   --color-accent: #2d5bff;
   --color-accent-hover: #1a45e0;
   --color-accent-soft: #eef2ff;
@@ -23,15 +28,38 @@
 
 /* --- Typography -------------------------------------------- */
 body {
+  font-family: var(--font-sans) !important;
+  background-color: var(--color-bg);
+  color: var(--color-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
 }
 
+html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, table, th, td, input, textarea, select, button, label, .navbar, .sidebar, .card, .footer, .nav, .nav-link, .navbar-brand, .form-control, .form-label {
+  font-family: var(--font-sans) !important;
+  font-variation-settings: "wght" 400;
+}
+
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 600;
+  font-weight: 700 !important;
+  font-family: var(--font-sans) !important;
+}
+
+code, pre, kbd, samp {
+  font-family: var(--font-mono) !important;
+}
+}
+
+code, pre {
+  font-family: var(--font-mono) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans) !important;
+  font-weight: 700 !important;
   line-height: 1.25;
-  color: var(--color-text);
+  color: var(--color-text) !important;
 }
 
 /* --- Navbar ------------------------------------------------ */
@@ -82,8 +110,8 @@ a:hover {
 
 /* --- Code blocks ------------------------------------------- */
 pre {
-  background: #f6f8fa !important;
-  color: var(--color-text);
+  background: var(--color-text) !important;  /* dark — matches hrdark */
+  color: #e5e7eb !important;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   padding: 1rem;
@@ -98,23 +126,23 @@ code {
 }
 
 pre code {
-  background: none;
+  background: none !important;
   padding: 0;
   border-radius: 0;
   font-size: inherit;
-  color: inherit;
+  color: inherit !important;
 }
 
-/* --- Syntax highlighting (downlit tokens) ------------------ */
-pre .co { color: #6a737d; font-style: italic; }  /* comments */
-pre .fu { color: #6f42c1; }                       /* functions */
-pre .st { color: #036a07; }                       /* strings */
-pre .kw { color: #d73a49; }                       /* keywords */
-pre .op { color: #005cc5; }                       /* operators */
-pre .cn { color: #005cc5; }                       /* constants */
-pre .va { color: var(--color-text); }              /* variables */
-pre .fl, pre .dv { color: #005cc5; }               /* numbers */
-pre .al { color: #e36209; }                        /* alerts */
+/* --- Syntax highlighting (downlit tokens — dark bg) -------- */
+pre .co { color: #8b949e; font-style: italic; }  /* comments */
+pre .fu { color: #d2a8ff; }                       /* functions */
+pre .st { color: #a5d6ff; }                       /* strings */
+pre .kw { color: #ff7b72; }                       /* keywords */
+pre .op { color: #e5e7eb; }                       /* operators */
+pre .cn { color: #79c0ff; }                       /* constants */
+pre .va { color: #e5e7eb; }                       /* variables */
+pre .fl, pre .dv { color: #79c0ff; }               /* numbers */
+pre .al { color: #ffa657; }                        /* alerts */
 
 /* --- Cards & content blocks -------------------------------- */
 .card {
