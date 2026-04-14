@@ -3,7 +3,7 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   usage: usage.html
-last_built: 2026-04-14T10:39Z
+last_built: 2026-04-14T12:19Z
 urls:
   reference: https://hmeleiro.github.io/opencis/reference
   article: https://hmeleiro.github.io/opencis/articles

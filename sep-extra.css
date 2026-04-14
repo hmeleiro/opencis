@@ -42,13 +42,12 @@ html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, table, th, td, in
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700 !important;
   font-family: var(--font-sans) !important;
+  font-weight: 800 !important;
 }
 
 code, pre, kbd, samp {
   font-family: var(--font-mono) !important;
-}
 }
 
 code, pre {
