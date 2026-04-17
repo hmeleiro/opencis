@@ -12,4 +12,4 @@ directly to R.
 
 Useful links:
 
-- <https://hmeleiro.github.io/opencis/>
+- <https://opencis.spainelectoralproject.com/>
