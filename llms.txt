@@ -115,22 +115,44 @@ print(df)
 
 ## Import data
 
-Functions to import data from the CIS archive.
+Functions to import CIS study data into R.
 
-- [`read_cis()`](https://hmeleiro.github.io/opencis/reference/read_cis.md)
+- [`read_cis()`](https://opencis.spainelectoralproject.com/reference/read_cis.md)
   : Import a CIS study
+- [`download_study()`](https://opencis.spainelectoralproject.com/reference/download_study.md)
+  : Download a CIS study ZIP file to disk
+- [`get_data_dictionary()`](https://opencis.spainelectoralproject.com/reference/get_data_dictionary.md)
+  : Extract a data dictionary from a CIS study data frame
 
 ## Search
 
 Functions to search for studies, questions and timeseries in the CIS
-archive.
+catalog.
 
-- [`search_cis()`](https://hmeleiro.github.io/opencis/reference/search_cis.md)
+- [`search_cis()`](https://opencis.spainelectoralproject.com/reference/search_cis.md)
   : Search for CIS studies.
+- [`search_all_cis()`](https://opencis.spainelectoralproject.com/reference/search_all_cis.md)
+  : Search all CIS results with automatic pagination
+
+## Study details
+
+Functions to retrieve metadata and documents for a specific study.
+
+- [`get_metadata()`](https://opencis.spainelectoralproject.com/reference/get_metadata.md)
+  : Get metadata of a CIS study
+- [`browse_pdf()`](https://opencis.spainelectoralproject.com/reference/browse_pdf.md)
+  : Open the questionnaire PDF of a CIS study
+
+## Utilities
+
+Helper functions for cache management.
+
+- [`clear_cache()`](https://opencis.spainelectoralproject.com/reference/clear_cache.md)
+  : Clear the opencis session cache
 
 # Articles
 
 ### All vignettes
 
 - [How to use
-  opencis](https://hmeleiro.github.io/opencis/articles/usage.md):
+  opencis](https://opencis.spainelectoralproject.com/articles/usage.md):

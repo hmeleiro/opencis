@@ -1,15 +1,40 @@
-# Download and read a CIS study from a given URL
+# Download a CIS study ZIP file to disk
 
-Download and read a CIS study from a given URL
+Downloads the data ZIP file for a CIS study to a specified directory,
+instead of a temporary folder. Useful for projects that need to keep the
+raw data files.
 
 ## Usage
 
 ``` r
-download_study(url)
+download_study(study_code, destdir = ".")
 ```
 
 ## Arguments
 
-- url:
+- study_code:
 
-  A string with the URL of the CIS study page.
+  A string with the study code.
+
+- destdir:
+
+  A string with the directory where the ZIP file will be saved. Defaults
+  to the current working directory.
+
+## Value
+
+The path to the saved ZIP file, invisibly.
+
+## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+# Save the ZIP file to the current directory
+path <- download_study("3328")
+cat("Saved to:", path, "\n")
+
+# Save to a specific folder
+path <- download_study("3328", destdir = tempdir())
+cat("Saved to:", path, "\n")
+} # }
+```

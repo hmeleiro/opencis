@@ -3,4 +3,4 @@
 ### All vignettes
 
 - [How to use
-  opencis](https://hmeleiro.github.io/opencis/articles/usage.md):
+  opencis](https://opencis.spainelectoralproject.com/articles/usage.md):

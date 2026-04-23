@@ -5,7 +5,7 @@ Download and import the data of a CIS study.
 ## Usage
 
 ``` r
-read_cis(study_code, verbose = FALSE)
+read_cis(study_code)
 ```
 
 ## Arguments
@@ -13,10 +13,6 @@ read_cis(study_code, verbose = FALSE)
 - study_code:
 
   A string with the study code.
-
-- verbose:
-
-  boolean. Controls the messages printed on the console.
 
 ## Value
 

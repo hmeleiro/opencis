@@ -82,7 +82,7 @@
 <p>The first function is used to search for surveys, survey questions
 and data series</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://opencis.spainelectoralproject.com/" class="external-link">opencis</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://opencis.spainelectoralproject.com">opencis</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Search for survey studies</span></span>
 <span><span class="fu"><a href="../reference/search_cis.html">search_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"preelectoral"</span>, from <span class="op">=</span> <span class="st">"2020-01-01"</span>, to <span class="op">=</span> <span class="st">"2023-11-17"</span><span class="op">)</span></span>
@@ -118,18 +118,18 @@ and data series</p>
 <span><span class="co"># Search for data series</span></span>
 <span><span class="fu"><a href="../reference/search_cis.html">search_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"situación económica"</span>, catalogo <span class="op">=</span> <span class="st">"serie"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 50 × 5</span></span></span>
-<span><span class="co">#&gt;    serie               from       to         title                         url  </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Serie K.1.03.03.012 2011-11-21 2026-02-13 Situación económica familiar… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> Serie K.1.02.01.014 1992-11-13 2019-10-01 Valoración de la situación e… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Serie K.1.02.01.008 1992-11-14 2019-06-17 Valoración de la situación e… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Serie K.1.02.01.003 1986-05-01 2019-10-01 Valoración de la situación e… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Serie K.1.02.01.004 1998-05-01 2019-10-01 Valoración de la situación e… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Serie K.1.02.01.007 1998-05-01 2019-10-01 Valoración de la situación e… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Serie K.1.02.01.019 1998-05-01 2015-05-29 Valoración de la situación e… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Serie K.1.02.01.011 1992-11-07 2020-03-01 Valoración de la situación e… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Serie K.1.03.01.012 2010-01-23 2017-09-21 Valoración de la situación e… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Serie K.1.03.01.020 1992-04-24 2026-03-02 Valoración de la situación e… http…</span></span>
+<span><span class="co">#&gt;    serie         from       to         title                               url  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> K.1.03.03.012 2011-11-21 2026-02-13 Situación económica familiar (ICC)  http…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> K.1.02.01.014 1992-11-13 2019-10-01 Valoración de la situación económi… http…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> K.1.02.01.008 1992-11-14 2019-06-17 Valoración de la situación económi… http…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> K.1.02.01.003 1986-05-01 2019-10-01 Valoración de la situación económi… http…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> K.1.02.01.004 1998-05-01 2019-10-01 Valoración de la situación económi… http…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> K.1.02.01.007 1998-05-01 2019-10-01 Valoración de la situación económi… http…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> K.1.02.01.019 1998-05-01 2015-05-29 Valoración de la situación económi… http…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> K.1.02.01.011 1992-11-07 2020-03-01 Valoración de la situación económi… http…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> K.1.03.01.012 2010-01-23 2017-09-21 Valoración de la situación económi… http…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> K.1.03.01.020 1992-04-24 2026-03-02 Valoración de la situación económi… http…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 40 more rows</span></span></span></code></pre></div>
 <p>The second function is used to import the data directly into R.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
