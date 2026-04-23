@@ -1,4 +1,3 @@
-\dontshow{httr::set_config(httr::config(ssl_verifypeer = 0L))}
 # Search by search terms
 studies <- search_cis(q = "postelectoral")
 print(studies)

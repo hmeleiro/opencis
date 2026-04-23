@@ -1,4 +1,4 @@
-url: https://hmeleiro.github.io/opencis
+url: https://opencis.spainelectoralproject.com/
 template:
   package: spainelectoraltheme
   bootstrap: 5
@@ -39,10 +39,25 @@ footer:
 
 reference:
 - title: Import data
-  desc:  Functions to import data from the CIS archive.
-- contents:
-  - starts_with("read_")
+  desc:  Functions to import CIS study data into R.
+  contents:
+  - read_cis
+  - download_study
+  - get_data_dictionary
+
 - title: Search
-  desc:  Functions to search for studies, questions and timeseries in the CIS archive.
-- contents:
-  - starts_with("search_")
+  desc:  Functions to search for studies, questions and timeseries in the CIS catalog.
+  contents:
+  - search_cis
+  - search_all_cis
+
+- title: Study details
+  desc:  Functions to retrieve metadata and documents for a specific study.
+  contents:
+  - get_metadata
+  - browse_pdf
+
+- title: Utilities
+  desc:  Helper functions for cache management.
+  contents:
+  - clear_cache

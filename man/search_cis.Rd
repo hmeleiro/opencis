@@ -37,7 +37,6 @@ A data.frame with the search results.
 Searches for CIS studies using the CIS search engine.
 }
 \examples{
-\dontshow{httr::set_config(httr::config(ssl_verifypeer = 0L))}
 # Search by search terms
 studies <- search_cis(q = "postelectoral")
 print(studies)

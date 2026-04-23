@@ -2,14 +2,32 @@
 % Please edit documentation in R/read.R
 \name{download_study}
 \alias{download_study}
-\title{Download and read a CIS study from a given URL}
+\title{Download a CIS study ZIP file to disk}
 \usage{
-download_study(url)
+download_study(study_code, destdir = ".")
 }
 \arguments{
-\item{url}{A string with the URL of the CIS study page.}
+\item{study_code}{A string with the study code.}
+
+\item{destdir}{A string with the directory where the ZIP file will be saved.
+Defaults to the current working directory.}
+}
+\value{
+The path to the saved ZIP file, invisibly.
 }
 \description{
-Download and read a CIS study from a given URL
+Downloads the data ZIP file for a CIS study to a specified directory,
+instead of a temporary folder. Useful for projects that need to keep
+the raw data files.
 }
-\keyword{internal}
+\examples{
+\dontrun{
+# Save the ZIP file to the current directory
+path <- download_study("3328")
+cat("Saved to:", path, "\n")
+
+# Save to a specific folder
+path <- download_study("3328", destdir = tempdir())
+cat("Saved to:", path, "\n")
+}
+}

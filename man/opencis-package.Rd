@@ -11,7 +11,7 @@ Search and import data directly to R from the [Spanish Sociological Research Cen
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://opencis.spainelectoralproject.com/}
+  \item \url{https://opencis.spainelectoralproject.com}
 }
 
 }

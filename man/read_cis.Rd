@@ -4,12 +4,10 @@
 \alias{read_cis}
 \title{Import a CIS study}
 \usage{
-read_cis(study_code, verbose = FALSE)
+read_cis(study_code)
 }
 \arguments{
 \item{study_code}{A string with the study code.}
-
-\item{verbose}{boolean. Controls the messages printed on the console.}
 }
 \value{
 A data.frame with the study data.
