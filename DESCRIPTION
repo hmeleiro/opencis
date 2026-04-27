@@ -2,15 +2,18 @@ Package: opencis
 Type: Package
 Title: Import Data from Spanish Sociological Research Center (CIS)
 Version: 0.1.0
-Author: Héctor Meleiro
-Maintainer: Héctor Meleiro <hmeleiro@gmail.com>
-Description: Search and import data directly to R from the [Spanish Sociological Research Center (CIS)](https://www.cis.es/inicio).
-    The CIS is a public institution that conducts electoral and sociological research studies on the Spanish society. 
-    The CIS has a large database of surveys that can be accessed through its website. The package includes functions 
-    to search for surveys, survey questions and timeseries, and import the data directly to R.
+Authors@R: c(
+    person("Héctor", "Meleiro", email = "hmeleiros@gmail.com", role = c("aut", "cre"))
+  )
+Description: Search and import data directly to R from the Spanish Sociological
+    Research Center (CIS) <https://www.cis.es/inicio>. The CIS is a public
+    institution that conducts electoral and sociological research studies on the
+    Spanish society. The CIS has a large database of surveys that can be
+    accessed through its website. The package includes functions to search for
+    surveys, survey questions and timeseries, and import the data directly to R.
 License: GPL (>= 3)
 Encoding: UTF-8
-LazyData: true
+Language: en-US
 RoxygenNote: 7.3.3
 Depends:
     R (>= 3.5.0)
@@ -23,11 +26,14 @@ Imports:
     rvest (>= 1.0.0),
     stringr (>= 1.0.0),
     memoise (>= 2.0.0)
-URL: https://opencis.spainelectoralproject.com
+URL: https://opencis.spainelectoralproject.com,
+    https://github.com/hmeleiro/opencis
+BugReports: https://github.com/hmeleiro/opencis/issues
 Suggests: 
     knitr,
-    pkgdown,
+    testthat (>= 3.0.0),
     rmarkdown
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 Config/Needs/website: hmeleiro/spainelectoraltheme
+Config/testthat/edition: 3

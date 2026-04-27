@@ -29,9 +29,7 @@ read_cis <- function(study_code) {
 #'
 #' @keywords internal
 download_file <- function(url, destfile = tempfile(fileext = ".zip")) {
-
-  resp_html <- GET(url)
-  stop_for_status(resp_html)
+  resp_html <- cis_get(url, required = TRUE, context = "downloading study page")
   html <- content(resp_html, as = "text", encoding = "UTF-8")
 
   zip_url <- find_url(html)
@@ -39,11 +37,18 @@ download_file <- function(url, destfile = tempfile(fileext = ".zip")) {
     stop("No ZIP URL found on the study page. The page structure may have changed.")
   }
 
-  resp_zip <- GET(zip_url, write_disk(destfile, overwrite = TRUE))
-  stop_for_status(resp_zip)
+  resp_zip <- cis_get(
+    zip_url,
+    write_disk(destfile, overwrite = TRUE),
+    required = TRUE,
+    context = "downloading study ZIP"
+  )
+
+  if (is.null(resp_zip)) {
+    stop("Could not download ZIP file.", call. = FALSE)
+  }
 
   return(destfile)
-
 }
 
 #' Find CIS study data URL in HTML content
@@ -71,7 +76,7 @@ find_url <- function(html,
     sprintf("https://www\\.cis\\.es/documents/%s/%s/", ids[1], ids[2])
   }
 
-  md_part   <- "MD\\d+\\.zip"
+  md_part <- "MD\\d+\\.zip"
   uuid_part <- if (allow_uuid) "(?:/[A-Za-z0-9-]+)?" else ""
 
   pat <- paste0(base_pat, md_part, uuid_part)
@@ -93,13 +98,13 @@ find_url <- function(html,
 read_sav_from_zip <- function(zip_path) {
   sav_file <- list_file_paths(zip_path, type = "sav")
 
-  if(nrow(sav_file) == 1) {
+  if (nrow(sav_file) == 1) {
     out_dir <- tempdir()
     sav_path <- unzip(zip_path, files = sav_file$Name, exdir = out_dir)
 
     data <- read_sav(sav_path, user_na = TRUE)
     return(data)
-  } else if(nrow(sav_file) > 1) {
+  } else if (nrow(sav_file) > 1) {
     stop("Found more than one sav file in zip file.")
   } else {
     stop("No sav file found.")
@@ -122,11 +127,11 @@ read_sav_from_zip <- function(zip_path) {
 list_file_paths <- function(zip_file, type = NULL) {
   files_in_zip <- unzip(zip_file, list = TRUE)
 
-  if(is.null(type)) {
+  if (is.null(type)) {
     return(files_in_zip)
   }
 
-  files_type <- files_in_zip[grepl(sprintf("\\.%s$", type), files_in_zip$Name),]
+  files_type <- files_in_zip[grepl(sprintf("\\.%s$", type), files_in_zip$Name), ]
   return(files_type)
 }
 
@@ -158,13 +163,13 @@ browse_pdf <- function(study_code, wanted_file = "cues") {
 
   pdf_files <- list_file_paths(zip_path, "pdf")
 
-  pdf_file <- pdf_files[grepl(wanted_file, pdf_files$Name, ignore.case = TRUE),]
+  pdf_file <- pdf_files[grepl(wanted_file, pdf_files$Name, ignore.case = TRUE), ]
 
-  if(nrow(pdf_file) == 1) {
+  if (nrow(pdf_file) == 1) {
     out_dir <- tempdir()
     pdf_path <- unzip(zip_path, files = pdf_file$Name, exdir = out_dir)
     browseURL(pdf_path)
-  } else if(nrow(pdf_file) > 1) {
+  } else if (nrow(pdf_file) > 1) {
     stop(sprintf("Found more than one pdf file in zip file with keyword '%s'.", wanted_file))
   } else {
     stop(sprintf("No pdf file found in zip file with keyword '%s'.", wanted_file))

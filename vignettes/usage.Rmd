@@ -25,11 +25,11 @@ devtools::install_github("hmeleiro/opencis")
 
 ## Usage
 
-The package includes two functions.
+### Searching for studies, questions and series
 
-The first function is used to search for surveys, survey questions and data series
+`search_cis()` searches the CIS catalogue and returns a tibble with matching results. The `catalogo` argument controls what type of item is searched: `"estudio"` (default), `"pregunta"` or `"serie"`. You can restrict results to a date range with `from` and `to`, and change the sort order with `sort` (`"relevance"`, `"publishDate-"`, `"publishDate+"`).
 
-```{r}
+```{r, eval = FALSE}
 library(opencis)
 
 # Search for survey studies
@@ -42,11 +42,93 @@ search_cis(q = "feminismo", catalogo = "pregunta")
 search_cis(q = "situación económica", catalogo = "serie")
 ```
 
-The second function is used to import the data directly into R.
+By default `search_cis()` returns only the first page of results. Use `search_all_cis()` to automatically paginate through all pages and get every matching result in a single tibble:
 
-```{r}
-# Read a survey study
+```{r, eval = FALSE}
+# Retrieve all postelectoral studies (all pages)
+all_studies <- search_all_cis(q = "postelectoral")
+print(nrow(all_studies))
+
+# Filter by date range across all pages
+studies <- search_all_cis(
+  q    = "ideologia",
+  from = "2010-01-01",
+  to   = "2020-12-31"
+)
+```
+
+`search_all_cis()` accepts the same arguments as `search_cis()`.
+
+------------------------------------------------------------------------
+
+### Reading study data into R
+
+`read_cis()` downloads the SPSS data file for a study and imports it directly into R as a labelled data frame (via `haven`):
+
+```{r, eval = FALSE}
 df <- read_cis(3411)
 print(df)
+```
 
+------------------------------------------------------------------------
+
+### Exploring variables: the data dictionary
+
+After loading a study with `read_cis()`, use `get_data_dictionary()` to obtain a tidy tibble with every variable name, its label and its value labels:
+
+```{r, eval = FALSE}
+df   <- read_cis(3328)
+dict <- get_data_dictionary(df)
+print(dict)
+
+# Find variables whose label contains a keyword
+dict[grepl("sexo", dict$label, ignore.case = TRUE), ]
+
+# Inspect value labels for a specific variable
+dict$value_labels[[which(dict$variable == "SEXO")]]
+```
+
+------------------------------------------------------------------------
+
+### Getting study metadata
+
+`get_metadata()` retrieves the technical information sheet of a study from the CIS website — field dates, study type, country, authorship, thematic indices, etc. — and returns it as a two-column tibble (`field`, `value`):
+
+```{r, eval = FALSE}
+meta <- get_metadata(3328)
+print(meta)
+
+```
+
+------------------------------------------------------------------------
+
+### Downloading the ZIP file to disk
+
+If you want to keep the raw data files instead of reading them into a temporary directory, use `download_study()`. It saves the ZIP archive to any local folder:
+
+```{r, eval = FALSE}
+# Save to the current working directory
+path <- download_study(3328)
+cat("Saved to:", path, "\n")
+
+# Save to a specific folder
+path <- download_study(3328, destdir = "data/raw")
+cat("Saved to:", path, "\n")
+```
+
+------------------------------------------------------------------------
+
+### Browsing the questionnaire and technical sheet
+
+`browse_pdf()` extracts the PDF documents bundled inside the study ZIP and opens them in your default browser. CIS ZIPs typically include two PDFs:
+
+- **Questionnaire** (`wanted_file = "cues"`, default)
+- **Technical sheet** (`wanted_file = "ft"`)
+
+```{r, eval = FALSE}
+# Open the questionnaire for study 3328
+browse_pdf(3328)
+
+# Open the technical sheet
+browse_pdf(3328, wanted_file = "ft")
 ```

@@ -1,3 +1,4 @@
+\dontrun{
 # Search by search terms
 studies <- search_cis(q = "postelectoral")
 print(studies)
@@ -14,3 +15,4 @@ studies <- search_cis(q = "ideologia",
                           to = "2020-01-01",
                           catalogo = "serie")
 print(studies)
+}

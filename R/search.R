@@ -17,30 +17,33 @@
 #'
 #' @example R/examples/search_cis.R
 search_cis <- function(
-    start = 1,
-    q = "",
-    from = NULL, # Date o NULL
-    to = NULL, # Date o NULL
-    sort = "relevance",
-    catalogo = "estudio",
-    ...) {
+  start = 1,
+  q = "",
+  from = NULL, # Date o NULL
+  to = NULL, # Date o NULL
+  sort = "relevance",
+  catalogo = "estudio",
+  ...
+) {
   args <- as.list(environment(), all = TRUE)
   url <- do.call(cis_catalog_url_date, args)
 
-  resp <- GET(url)
+  resp <- cis_get(url, required = FALSE, context = "searching CIS catalog")
+
+  if (is.null(resp)) {
+    return(NULL)
+  }
 
   if (status_code(resp) == 200) {
-
-    if(catalogo == "estudio") {
+    if (catalogo == "estudio") {
       out <- parse_study(resp)
-    } else if( catalogo == "pregunta") {
+    } else if (catalogo == "pregunta") {
       out <- parse_question(resp)
-    } else if( catalogo == "serie") {
+    } else if (catalogo == "serie") {
       out <- parse_serie(resp)
     } else {
       stop("Invalid catalogo value. Must be 'estudio', 'pregunta' or 'serie'.")
     }
-
   } else {
     return(NULL)
   }
@@ -153,7 +156,7 @@ parse_question <- function(resp) {
     html %>%
     html_elements(".card-content")
 
-  a <- card_content%>%
+  a <- card_content %>%
     html_element("a")
 
   titles <- html_attr(a, name = "title")
@@ -196,6 +199,11 @@ parse_question <- function(resp) {
 get_study_url <- function(study_code) {
   studies <- search_cis(q = study_code)
 
+  if (is.null(studies)) {
+    message("Could not retrieve study index.")
+    return(NULL)
+  }
+
   if (nrow(studies) == 0) {
     message("No study found.")
     return(NULL)
@@ -235,13 +243,14 @@ get_study_url <- function(study_code) {
 #'
 #' @keywords internal
 cis_catalog_url_date <- function(
-    start = 1,
-    q = "",
-    from = NULL, # Date o NULL
-    to = NULL, # Date o NULL
-    sort = "relevance",
-    catalogo = "estudio",
-    ...) {
+  start = 1,
+  q = "",
+  from = NULL, # Date o NULL
+  to = NULL, # Date o NULL
+  sort = "relevance",
+  catalogo = "estudio",
+  ...
+) {
   if (sort == "relevance") {
     sort <- ""
   }
@@ -313,12 +322,13 @@ cis_catalog_url_date <- function(
 #'
 #' @example R/examples/search_all_cis.R
 search_all_cis <- function(
-    q = "",
-    from = NULL,
-    to = NULL,
-    sort = "relevance",
-    catalogo = "estudio",
-    ...) {
+  q = "",
+  from = NULL,
+  to = NULL,
+  sort = "relevance",
+  catalogo = "estudio",
+  ...
+) {
   all_results <- list()
   page <- 1
 
@@ -365,8 +375,7 @@ get_metadata <- function(study_code) {
     stop("Study '", study_code, "' not found.")
   }
 
-  resp <- GET(url)
-  stop_for_status(resp)
+  resp <- cis_get(url, required = TRUE, context = "retrieving study metadata")
   html <- content(resp, "parsed")
 
   # --- Date fields (.jdt-study-dates__item) ---
@@ -374,7 +383,7 @@ get_metadata <- function(study_code) {
   date_values <- trimws(html_text(html_elements(html, ".jdt-study-dates__date")))
 
   # --- Info items: each .last-container has a bold label + plain value ---
-  info_items  <- html_elements(html, ".jdt-detalle .last-container")
+  info_items <- html_elements(html, ".jdt-detalle .last-container")
   info_labels <- character(0)
   info_values <- character(0)
 

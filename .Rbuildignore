@@ -9,4 +9,8 @@
 ^doc$
 ^Meta$
 .copilot-instructions.md
+^opencis\.Rcheck$
+^opencis_.*\.tar\.gz$
 
+^\.positai$
+^\.claude$
