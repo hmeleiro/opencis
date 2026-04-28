@@ -236,9 +236,23 @@ get_data_dictionary <- function(data) {
   vl <- lapply(data, function(x) attr(x, "label"))
   vv <- lapply(data, function(x) attr(x, "labels"))
 
+  normalize_label <- function(x) {
+    if (is.null(x) || length(x) == 0) {
+      return(NA_character_)
+    }
+
+    x <- as.character(x)
+    x <- x[!is.na(x) & nzchar(x)]
+
+    if (length(x) == 0) {
+      return(NA_character_)
+    }
+    x[[1]]
+  }
+
   tibble(
     variable     = names(data),
-    label        = vapply(vl, function(x) if (is.null(x)) NA_character_ else x, character(1)),
+    label        = vapply(vl, normalize_label, character(1)),
     value_labels = vv
   )
 }
