@@ -94,43 +94,16 @@ Default is "relevance".</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Search by search terms</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># Search by search terms</span></span></span>
 <span class="r-in"><span><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu">search_cis</span><span class="op">(</span>q <span class="op">=</span> <span class="st">"postelectoral"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 50 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    study date       title                                   url                 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 1497  1985-12-01 Postelectoral Galicia 1985              https://www.cis.es/…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 1292  1981-11-03 Postelectoral Galicia 1981              https://www.cis.es/…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2199  1995-11-28 Postelectoral Cataluña 1995             https://www.cis.es/…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 1998  1992-03-25 Postelectoral Cataluña 1992             https://www.cis.es/…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 1750  1988-06-02 Postelectoral Cataluña 1988             https://www.cis.es/…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 1903  1990-11-08 Postelectoral País Vasco 1990           https://www.cis.es/…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 1402  1984-03-01 Postelectoral País Vasco 1984           https://www.cis.es/…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 2120  1994-10-28 Postelectoral País Vasco 1994           https://www.cis.es/…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 1565  1986-12-01 Postelectoral País Vasco 1986           https://www.cis.es/…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 1327  1982-11-01 Postelectoral elecciones generales 1982 https://www.cis.es/…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Narrow the search by dates</span></span></span>
 <span class="r-in"><span><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu">search_cis</span><span class="op">(</span>q <span class="op">=</span> <span class="st">"postelectoral"</span>,</span></span>
 <span class="r-in"><span>                          from <span class="op">=</span> <span class="st">"2011-01-01"</span>,</span></span>
 <span class="r-in"><span>                          to <span class="op">=</span> <span class="st">"2020-01-01"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 50 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    study date       title                                                  url  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 3248  2019-05-10 Postelectoral elecciones generales 2019                http…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 3145  2016-07-04 Postelectoral elecciones generales 2016                http…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 2890  2011-05-27 Postelectoral elecciones municipales 2011. Barcelona   http…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 3085  2015-05-31 Postelectoral elecciones municipales 2015. Barcelona   http…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 3155  2016-09-28 Postelectoral de Galicia. Elecciones autonómicas 2016  http…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 3202  2017-12-28 Postelectoral de Cataluña. Elecciones autonómicas 2017 http…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 3113  2015-09-30 Postelectoral de Cataluña. Elecciones autonómicas 2015 http…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 3028  2014-05-29 Postelectoral elecciones al Parlamento Europeo 2014    http…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 2963  2012-10-25 Postelectoral de Galicia. Elecciones autonómicas 2012  http…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 3253  2019-06-17 Postelectoral elecciones autonómicas y municipales 20… http…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 40 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Use the catalogo parameter to search for questions ("pregunta") or data series ("serie")</span></span></span>
 <span class="r-in"><span><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu">search_cis</span><span class="op">(</span>q <span class="op">=</span> <span class="st">"ideologia"</span>,</span></span>
@@ -138,8 +111,7 @@ Default is "relevance".</p></dd>
 <span class="r-in"><span>                          to <span class="op">=</span> <span class="st">"2020-01-01"</span>,</span></span>
 <span class="r-in"><span>                          catalogo <span class="op">=</span> <span class="st">"serie"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">studies</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 0 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 variables: title &lt;chr&gt;, url &lt;chr&gt;</span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

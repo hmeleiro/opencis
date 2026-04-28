@@ -78,85 +78,124 @@
 <div class="section level2">
 <h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>The package includes two functions.</p>
-<p>The first function is used to search for surveys, survey questions
-and data series</p>
+<div class="section level3">
+<h3 id="searching-for-studies-questions-and-series">Searching for studies, questions and series<a class="anchor" aria-label="anchor" href="#searching-for-studies-questions-and-series"></a>
+</h3>
+<p><code><a href="../reference/search_cis.html">search_cis()</a></code> searches the CIS catalogue and returns a
+tibble with matching results. The <code>catalogo</code> argument
+controls what type of item is searched: <code>"estudio"</code>
+(default), <code>"pregunta"</code> or <code>"serie"</code>. You can
+restrict results to a date range with <code>from</code> and
+<code>to</code>, and change the sort order with <code>sort</code>
+(<code>"relevance"</code>, <code>"publishDate-"</code>,
+<code>"publishDate+"</code>).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://opencis.spainelectoralproject.com">opencis</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Search for survey studies</span></span>
 <span><span class="fu"><a href="../reference/search_cis.html">search_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"preelectoral"</span>, from <span class="op">=</span> <span class="st">"2020-01-01"</span>, to <span class="op">=</span> <span class="st">"2023-11-17"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 27 × 4</span></span></span>
-<span><span class="co">#&gt;    study date       title                                                  url  </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 3411  2023-06-08 Preelectoral elecciones generales 2023                 http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 3402  2023-04-10 Preelectoral elecciones municipales y autonómicas 2023 http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 3306  2021-01-02 Preelectoral de Cataluña. Elecciones autonómicas 2021  http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 3317  2021-03-19 Preelectoral elecciones autonómicas 2021. Comunidad d… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 3287  2020-06-10 Preelectoral de Galicia. Elecciones autonómicas julio… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 3276  2020-02-17 Preelectoral de Galicia. Elecciones autonómicas abril… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 3286  2020-06-10 Preelectoral del País Vasco. Elecciones autonómicas j… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 3275  2020-02-17 Preelectoral del País Vasco. Elecciones autonómicas a… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 3365  2022-05-17 Preelectoral elecciones autonómicas 2022. Comunidad a… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 3348  2022-01-07 Preelectoral elecciones autonómicas 2022. Comunidad a… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 17 more rows</span></span></span>
 <span></span>
 <span><span class="co"># Search for survey questions</span></span>
 <span><span class="fu"><a href="../reference/search_cis.html">search_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"feminismo"</span>, catalogo <span class="op">=</span> <span class="st">"pregunta"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 8 × 4</span></span></span>
-<span><span class="co">#&gt;   question    date   title                                                 url  </span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;date&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 3428/0/0016 <span style="color: #BB0000;">NA</span>     Escala de autodefinición feminista (0-10)             http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 2212/0/0008 <span style="color: #BB0000;">NA</span>     Sentimientos hacia diferentes ideologías, situacione… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2828/0/0010 <span style="color: #BB0000;">NA</span>     Rasgos ideológicos que definen a la derecha y a la i… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> 1993/0/0009 <span style="color: #BB0000;">NA</span>     Sentimientos hacia diferentes ideologías, situacione… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> 2401/0/0025 <span style="color: #BB0000;">NA</span>     Rasgos ideológicos que definen a la derecha y a la i… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> 3428/0/0010 <span style="color: #BB0000;">NA</span>     Aprobación de diferentes conductas pro-igualdad de g… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> 2016/0/0026 <span style="color: #BB0000;">NA</span>     Rasgos que definen a la derecha y a la izquierda pol… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">8</span> 2154/0/0036 <span style="color: #BB0000;">NA</span>     Rasgos que definen a la derecha y a la izquierda pol… http…</span></span>
 <span></span>
 <span><span class="co"># Search for data series</span></span>
-<span><span class="fu"><a href="../reference/search_cis.html">search_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"situación económica"</span>, catalogo <span class="op">=</span> <span class="st">"serie"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 50 × 5</span></span></span>
-<span><span class="co">#&gt;    serie         from       to         title                               url  </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> K.1.03.03.012 2011-11-21 2026-02-13 Situación económica familiar (ICC)  http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> K.1.02.01.014 1992-11-13 2019-10-01 Valoración de la situación económi… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> K.1.02.01.008 1992-11-14 2019-06-17 Valoración de la situación económi… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> K.1.02.01.003 1986-05-01 2019-10-01 Valoración de la situación económi… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> K.1.02.01.004 1998-05-01 2019-10-01 Valoración de la situación económi… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> K.1.02.01.007 1998-05-01 2019-10-01 Valoración de la situación económi… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> K.1.02.01.019 1998-05-01 2015-05-29 Valoración de la situación económi… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> K.1.02.01.011 1992-11-07 2020-03-01 Valoración de la situación económi… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> K.1.03.01.012 2010-01-23 2017-09-21 Valoración de la situación económi… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> K.1.03.01.020 1992-04-24 2026-03-02 Valoración de la situación económi… http…</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 40 more rows</span></span></span></code></pre></div>
-<p>The second function is used to import the data directly into R.</p>
+<span><span class="fu"><a href="../reference/search_cis.html">search_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"situación económica"</span>, catalogo <span class="op">=</span> <span class="st">"serie"</span><span class="op">)</span></span></code></pre></div>
+<p>By default <code><a href="../reference/search_cis.html">search_cis()</a></code> returns only the first page of
+results. Use <code><a href="../reference/search_all_cis.html">search_all_cis()</a></code> to automatically paginate
+through all pages and get every matching result in a single tibble:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Read a survey study</span></span>
-<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_cis.html">read_cis</a></span><span class="op">(</span><span class="fl">3411</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Invalid date string (length=9): 11 042 23</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 29,201 × 216</span></span></span>
-<span><span class="co">#&gt;    ESTUDIO     REGISTRO  CUES CCAA       PROV    MUN     CAPITAL TAMUNI  ENTREV </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;dbl+lbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl+lbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl+l&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl+l&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl+l&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl+l&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl+l&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="text-decoration: underline;">3</span>411<span style="color: #949494;"> [3411]</span>   <span style="text-decoration: underline;">492</span>777 <span style="text-decoration: underline;">29</span>043 1<span style="color: #949494;"> [Andalu…</span> 4<span style="color: #949494;"> [Alm…</span> 0<span style="color: #949494;"> [Mun…</span> 3<span style="color: #949494;"> [Otr…</span> 1<span style="color: #949494;"> [Men…</span> 0<span style="color: #949494;"> [Ano…</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> <span style="text-decoration: underline;">3</span>411<span style="color: #949494;"> [3411]</span>    <span style="text-decoration: underline;">70</span>655  <span style="text-decoration: underline;">5</span>848 1<span style="color: #949494;"> [Andalu…</span> 4<span style="color: #949494;"> [Alm…</span> 0<span style="color: #949494;"> [Mun…</span> 3<span style="color: #949494;"> [Otr…</span> 1<span style="color: #949494;"> [Men…</span> 0<span style="color: #949494;"> [Ano…</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> <span style="text-decoration: underline;">3</span>411<span style="color: #949494;"> [3411]</span>    <span style="text-decoration: underline;">46</span>423  <span style="text-decoration: underline;">3</span>893 1<span style="color: #949494;"> [Andalu…</span> 4<span style="color: #949494;"> [Alm…</span> 0<span style="color: #949494;"> [Mun…</span> 3<span style="color: #949494;"> [Otr…</span> 3<span style="color: #949494;"> [10.…</span> 0<span style="color: #949494;"> [Ano…</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> <span style="text-decoration: underline;">3</span>411<span style="color: #949494;"> [3411]</span>   <span style="text-decoration: underline;">103</span>464  <span style="text-decoration: underline;">8</span>711 1<span style="color: #949494;"> [Andalu…</span> 4<span style="color: #949494;"> [Alm…</span> 0<span style="color: #949494;"> [Mun…</span> 3<span style="color: #949494;"> [Otr…</span> 3<span style="color: #949494;"> [10.…</span> 0<span style="color: #949494;"> [Ano…</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> <span style="text-decoration: underline;">3</span>411<span style="color: #949494;"> [3411]</span>   <span style="text-decoration: underline;">112</span>810  <span style="text-decoration: underline;">9</span>517 1<span style="color: #949494;"> [Andalu…</span> 4<span style="color: #949494;"> [Alm…</span> 0<span style="color: #949494;"> [Mun…</span> 3<span style="color: #949494;"> [Otr…</span> 3<span style="color: #949494;"> [10.…</span> 0<span style="color: #949494;"> [Ano…</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> <span style="text-decoration: underline;">3</span>411<span style="color: #949494;"> [3411]</span>   <span style="text-decoration: underline;">126</span>567 <span style="text-decoration: underline;">10</span>736 1<span style="color: #949494;"> [Andalu…</span> 4<span style="color: #949494;"> [Alm…</span> 0<span style="color: #949494;"> [Mun…</span> 3<span style="color: #949494;"> [Otr…</span> 3<span style="color: #949494;"> [10.…</span> 0<span style="color: #949494;"> [Ano…</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> <span style="text-decoration: underline;">3</span>411<span style="color: #949494;"> [3411]</span>   <span style="text-decoration: underline;">137</span>692 <span style="text-decoration: underline;">11</span>573 1<span style="color: #949494;"> [Andalu…</span> 4<span style="color: #949494;"> [Alm…</span> 0<span style="color: #949494;"> [Mun…</span> 3<span style="color: #949494;"> [Otr…</span> 3<span style="color: #949494;"> [10.…</span> 0<span style="color: #949494;"> [Ano…</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> <span style="text-decoration: underline;">3</span>411<span style="color: #949494;"> [3411]</span>   <span style="text-decoration: underline;">182</span>178 <span style="text-decoration: underline;">14</span>839 1<span style="color: #949494;"> [Andalu…</span> 4<span style="color: #949494;"> [Alm…</span> 0<span style="color: #949494;"> [Mun…</span> 3<span style="color: #949494;"> [Otr…</span> 3<span style="color: #949494;"> [10.…</span> 0<span style="color: #949494;"> [Ano…</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> <span style="text-decoration: underline;">3</span>411<span style="color: #949494;"> [3411]</span>   <span style="text-decoration: underline;">216</span>764 <span style="text-decoration: underline;">16</span>793 1<span style="color: #949494;"> [Andalu…</span> 4<span style="color: #949494;"> [Alm…</span> 0<span style="color: #949494;"> [Mun…</span> 3<span style="color: #949494;"> [Otr…</span> 3<span style="color: #949494;"> [10.…</span> 0<span style="color: #949494;"> [Ano…</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> <span style="text-decoration: underline;">3</span>411<span style="color: #949494;"> [3411]</span>   <span style="text-decoration: underline;">237</span>655 <span style="text-decoration: underline;">17</span>918 1<span style="color: #949494;"> [Andalu…</span> 4<span style="color: #949494;"> [Alm…</span> 0<span style="color: #949494;"> [Mun…</span> 3<span style="color: #949494;"> [Otr…</span> 3<span style="color: #949494;"> [10.…</span> 0<span style="color: #949494;"> [Ano…</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 29,191 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 207 more variables: TIPO_TEL &lt;dbl+lbl&gt;, SEXO &lt;dbl+lbl&gt;, EDAD &lt;dbl+lbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   P0A &lt;dbl+lbl&gt;, ECOPER &lt;dbl+lbl&gt;, ECOESP &lt;dbl+lbl&gt;, MEDIO_1 &lt;dbl+lbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   MEDIO_2 &lt;dbl+lbl&gt;, LEEPRENSA &lt;dbl+lbl&gt;, VETELE &lt;dbl+lbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   OYERADIO &lt;dbl+lbl&gt;, PRENSA &lt;dbl+lbl&gt;, P3AR &lt;dbl+lbl&gt;, TELEVISION &lt;dbl+lbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   P3BR &lt;dbl+lbl&gt;, RADIO &lt;dbl+lbl&gt;, P3CR &lt;dbl+lbl&gt;, GESTIONGOB &lt;dbl+lbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   GESTIONOPO &lt;dbl+lbl&gt;, PROBVOTO &lt;dbl+lbl&gt;, VOTOCORREO &lt;dbl+lbl&gt;, …</span></span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Retrieve all postelectoral studies (all pages)</span></span>
+<span><span class="va">all_studies</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_all_cis.html">search_all_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"postelectoral"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">all_studies</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Filter by date range across all pages</span></span>
+<span><span class="va">studies</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_all_cis.html">search_all_cis</a></span><span class="op">(</span></span>
+<span>  q    <span class="op">=</span> <span class="st">"ideologia"</span>,</span>
+<span>  from <span class="op">=</span> <span class="st">"2010-01-01"</span>,</span>
+<span>  to   <span class="op">=</span> <span class="st">"2020-12-31"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><code><a href="../reference/search_all_cis.html">search_all_cis()</a></code> accepts the same arguments as
+<code><a href="../reference/search_cis.html">search_cis()</a></code>.</p>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="reading-study-data-into-r">Reading study data into R<a class="anchor" aria-label="anchor" href="#reading-study-data-into-r"></a>
+</h3>
+<p><code><a href="../reference/read_cis.html">read_cis()</a></code> downloads the SPSS data file for a study and
+imports it directly into R as a labelled data frame (via
+<code>haven</code>):</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_cis.html">read_cis</a></span><span class="op">(</span><span class="fl">3411</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="exploring-variables-the-data-dictionary">Exploring variables: the data dictionary<a class="anchor" aria-label="anchor" href="#exploring-variables-the-data-dictionary"></a>
+</h3>
+<p>After loading a study with <code><a href="../reference/read_cis.html">read_cis()</a></code>, use
+<code><a href="../reference/get_data_dictionary.html">get_data_dictionary()</a></code> to obtain a tidy tibble with every
+variable name, its label and its value labels:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span>   <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_cis.html">read_cis</a></span><span class="op">(</span><span class="fl">3328</span><span class="op">)</span></span>
+<span><span class="va">dict</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_data_dictionary.html">get_data_dictionary</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dict</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Find variables whose label contains a keyword</span></span>
+<span><span class="va">dict</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"sexo"</span>, <span class="va">dict</span><span class="op">$</span><span class="va">label</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">]</span></span>
+<span></span>
+<span><span class="co"># Inspect value labels for a specific variable</span></span>
+<span><span class="va">dict</span><span class="op">$</span><span class="va">value_labels</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">dict</span><span class="op">$</span><span class="va">variable</span> <span class="op">==</span> <span class="st">"SEXO"</span><span class="op">)</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="getting-study-metadata">Getting study metadata<a class="anchor" aria-label="anchor" href="#getting-study-metadata"></a>
+</h3>
+<p><code><a href="../reference/get_metadata.html">get_metadata()</a></code> retrieves the technical information sheet
+of a study from the CIS website — field dates, study type, country,
+authorship, thematic indices, etc. — and returns it as a two-column
+tibble (<code>field</code>, <code>value</code>):</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_metadata.html">get_metadata</a></span><span class="op">(</span><span class="fl">3328</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="downloading-the-zip-file-to-disk">Downloading the ZIP file to disk<a class="anchor" aria-label="anchor" href="#downloading-the-zip-file-to-disk"></a>
+</h3>
+<p>If you want to keep the raw data files instead of reading them into a
+temporary directory, use <code><a href="../reference/download_study.html">download_study()</a></code>. It saves the ZIP
+archive to any local folder:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Save to the current working directory</span></span>
+<span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/download_study.html">download_study</a></span><span class="op">(</span><span class="fl">3328</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Saved to:"</span>, <span class="va">path</span>, <span class="st">"\n"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Save to a specific folder</span></span>
+<span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/download_study.html">download_study</a></span><span class="op">(</span><span class="fl">3328</span>, destdir <span class="op">=</span> <span class="st">"data/raw"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Saved to:"</span>, <span class="va">path</span>, <span class="st">"\n"</span><span class="op">)</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="browsing-the-questionnaire-and-technical-sheet">Browsing the questionnaire and technical sheet<a class="anchor" aria-label="anchor" href="#browsing-the-questionnaire-and-technical-sheet"></a>
+</h3>
+<p><code><a href="../reference/browse_pdf.html">browse_pdf()</a></code> extracts the PDF documents bundled inside
+the study ZIP and opens them in your default browser. CIS ZIPs typically
+include two PDFs:</p>
+<ul>
+<li>
+<strong>Questionnaire</strong> (<code>wanted_file = "cues"</code>,
+default)</li>
+<li>
+<strong>Technical sheet</strong>
+(<code>wanted_file = "ft"</code>)</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Open the questionnaire for study 3328</span></span>
+<span><span class="fu"><a href="../reference/browse_pdf.html">browse_pdf</a></span><span class="op">(</span><span class="fl">3328</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Open the technical sheet</span></span>
+<span><span class="fu"><a href="../reference/browse_pdf.html">browse_pdf</a></span><span class="op">(</span><span class="fl">3328</span>, wanted_file <span class="op">=</span> <span class="st">"ft"</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

@@ -2,7 +2,7 @@
 
 ## Authors
 
-- **Héctor Meleiro**. Maintainer.
+- **Héctor Meleiro**. Author, maintainer.
 
 ## Citation
 

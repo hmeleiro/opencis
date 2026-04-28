@@ -10,88 +10,137 @@ devtools::install_github("hmeleiro/opencis")
 
 ## Usage
 
-The package includes two functions.
+### Searching for studies, questions and series
 
-The first function is used to search for surveys, survey questions and
-data series
+[`search_cis()`](https://opencis.spainelectoralproject.com/reference/search_cis.md)
+searches the CIS catalogue and returns a tibble with matching results.
+The `catalogo` argument controls what type of item is searched:
+`"estudio"` (default), `"pregunta"` or `"serie"`. You can restrict
+results to a date range with `from` and `to`, and change the sort order
+with `sort` (`"relevance"`, `"publishDate-"`, `"publishDate+"`).
 
 ``` r
 library(opencis)
 
 # Search for survey studies
 search_cis(q = "preelectoral", from = "2020-01-01", to = "2023-11-17")
-#> # A tibble: 27 × 4
-#>    study date       title                                                  url  
-#>    <chr> <date>     <chr>                                                  <chr>
-#>  1 3411  2023-06-08 Preelectoral elecciones generales 2023                 http…
-#>  2 3402  2023-04-10 Preelectoral elecciones municipales y autonómicas 2023 http…
-#>  3 3306  2021-01-02 Preelectoral de Cataluña. Elecciones autonómicas 2021  http…
-#>  4 3317  2021-03-19 Preelectoral elecciones autonómicas 2021. Comunidad d… http…
-#>  5 3287  2020-06-10 Preelectoral de Galicia. Elecciones autonómicas julio… http…
-#>  6 3276  2020-02-17 Preelectoral de Galicia. Elecciones autonómicas abril… http…
-#>  7 3286  2020-06-10 Preelectoral del País Vasco. Elecciones autonómicas j… http…
-#>  8 3275  2020-02-17 Preelectoral del País Vasco. Elecciones autonómicas a… http…
-#>  9 3365  2022-05-17 Preelectoral elecciones autonómicas 2022. Comunidad a… http…
-#> 10 3348  2022-01-07 Preelectoral elecciones autonómicas 2022. Comunidad a… http…
-#> # ℹ 17 more rows
 
 # Search for survey questions
 search_cis(q = "feminismo", catalogo = "pregunta")
-#> # A tibble: 8 × 4
-#>   question    date   title                                                 url  
-#>   <chr>       <date> <chr>                                                 <chr>
-#> 1 3428/0/0016 NA     Escala de autodefinición feminista (0-10)             http…
-#> 2 2212/0/0008 NA     Sentimientos hacia diferentes ideologías, situacione… http…
-#> 3 2828/0/0010 NA     Rasgos ideológicos que definen a la derecha y a la i… http…
-#> 4 1993/0/0009 NA     Sentimientos hacia diferentes ideologías, situacione… http…
-#> 5 2401/0/0025 NA     Rasgos ideológicos que definen a la derecha y a la i… http…
-#> 6 3428/0/0010 NA     Aprobación de diferentes conductas pro-igualdad de g… http…
-#> 7 2016/0/0026 NA     Rasgos que definen a la derecha y a la izquierda pol… http…
-#> 8 2154/0/0036 NA     Rasgos que definen a la derecha y a la izquierda pol… http…
 
 # Search for data series
 search_cis(q = "situación económica", catalogo = "serie")
-#> # A tibble: 50 × 5
-#>    serie         from       to         title                               url  
-#>    <chr>         <date>     <date>     <chr>                               <chr>
-#>  1 K.1.03.03.012 2011-11-21 2026-02-13 Situación económica familiar (ICC)  http…
-#>  2 K.1.02.01.014 1992-11-13 2019-10-01 Valoración de la situación económi… http…
-#>  3 K.1.02.01.008 1992-11-14 2019-06-17 Valoración de la situación económi… http…
-#>  4 K.1.02.01.003 1986-05-01 2019-10-01 Valoración de la situación económi… http…
-#>  5 K.1.02.01.004 1998-05-01 2019-10-01 Valoración de la situación económi… http…
-#>  6 K.1.02.01.007 1998-05-01 2019-10-01 Valoración de la situación económi… http…
-#>  7 K.1.02.01.019 1998-05-01 2015-05-29 Valoración de la situación económi… http…
-#>  8 K.1.02.01.011 1992-11-07 2020-03-01 Valoración de la situación económi… http…
-#>  9 K.1.03.01.012 2010-01-23 2017-09-21 Valoración de la situación económi… http…
-#> 10 K.1.03.01.020 1992-04-24 2026-03-02 Valoración de la situación económi… http…
-#> # ℹ 40 more rows
 ```
 
-The second function is used to import the data directly into R.
+By default
+[`search_cis()`](https://opencis.spainelectoralproject.com/reference/search_cis.md)
+returns only the first page of results. Use
+[`search_all_cis()`](https://opencis.spainelectoralproject.com/reference/search_all_cis.md)
+to automatically paginate through all pages and get every matching
+result in a single tibble:
 
 ``` r
-# Read a survey study
+# Retrieve all postelectoral studies (all pages)
+all_studies <- search_all_cis(q = "postelectoral")
+print(nrow(all_studies))
+
+# Filter by date range across all pages
+studies <- search_all_cis(
+  q    = "ideologia",
+  from = "2010-01-01",
+  to   = "2020-12-31"
+)
+```
+
+[`search_all_cis()`](https://opencis.spainelectoralproject.com/reference/search_all_cis.md)
+accepts the same arguments as
+[`search_cis()`](https://opencis.spainelectoralproject.com/reference/search_cis.md).
+
+------------------------------------------------------------------------
+
+### Reading study data into R
+
+[`read_cis()`](https://opencis.spainelectoralproject.com/reference/read_cis.md)
+downloads the SPSS data file for a study and imports it directly into R
+as a labelled data frame (via `haven`):
+
+``` r
 df <- read_cis(3411)
-#> Invalid date string (length=9): 11 042 23
 print(df)
-#> # A tibble: 29,201 × 216
-#>    ESTUDIO     REGISTRO  CUES CCAA       PROV    MUN     CAPITAL TAMUNI  ENTREV 
-#>    <dbl+lbl>      <dbl> <dbl> <dbl+lbl>  <dbl+l> <dbl+l> <dbl+l> <dbl+l> <dbl+l>
-#>  1 3411 [3411]   492777 29043 1 [Andalu… 4 [Alm… 0 [Mun… 3 [Otr… 1 [Men… 0 [Ano…
-#>  2 3411 [3411]    70655  5848 1 [Andalu… 4 [Alm… 0 [Mun… 3 [Otr… 1 [Men… 0 [Ano…
-#>  3 3411 [3411]    46423  3893 1 [Andalu… 4 [Alm… 0 [Mun… 3 [Otr… 3 [10.… 0 [Ano…
-#>  4 3411 [3411]   103464  8711 1 [Andalu… 4 [Alm… 0 [Mun… 3 [Otr… 3 [10.… 0 [Ano…
-#>  5 3411 [3411]   112810  9517 1 [Andalu… 4 [Alm… 0 [Mun… 3 [Otr… 3 [10.… 0 [Ano…
-#>  6 3411 [3411]   126567 10736 1 [Andalu… 4 [Alm… 0 [Mun… 3 [Otr… 3 [10.… 0 [Ano…
-#>  7 3411 [3411]   137692 11573 1 [Andalu… 4 [Alm… 0 [Mun… 3 [Otr… 3 [10.… 0 [Ano…
-#>  8 3411 [3411]   182178 14839 1 [Andalu… 4 [Alm… 0 [Mun… 3 [Otr… 3 [10.… 0 [Ano…
-#>  9 3411 [3411]   216764 16793 1 [Andalu… 4 [Alm… 0 [Mun… 3 [Otr… 3 [10.… 0 [Ano…
-#> 10 3411 [3411]   237655 17918 1 [Andalu… 4 [Alm… 0 [Mun… 3 [Otr… 3 [10.… 0 [Ano…
-#> # ℹ 29,191 more rows
-#> # ℹ 207 more variables: TIPO_TEL <dbl+lbl>, SEXO <dbl+lbl>, EDAD <dbl+lbl>,
-#> #   P0A <dbl+lbl>, ECOPER <dbl+lbl>, ECOESP <dbl+lbl>, MEDIO_1 <dbl+lbl>,
-#> #   MEDIO_2 <dbl+lbl>, LEEPRENSA <dbl+lbl>, VETELE <dbl+lbl>,
-#> #   OYERADIO <dbl+lbl>, PRENSA <dbl+lbl>, P3AR <dbl+lbl>, TELEVISION <dbl+lbl>,
-#> #   P3BR <dbl+lbl>, RADIO <dbl+lbl>, P3CR <dbl+lbl>, GESTIONGOB <dbl+lbl>,
-#> #   GESTIONOPO <dbl+lbl>, PROBVOTO <dbl+lbl>, VOTOCORREO <dbl+lbl>, …
+```
+
+------------------------------------------------------------------------
+
+### Exploring variables: the data dictionary
+
+After loading a study with
+[`read_cis()`](https://opencis.spainelectoralproject.com/reference/read_cis.md),
+use
+[`get_data_dictionary()`](https://opencis.spainelectoralproject.com/reference/get_data_dictionary.md)
+to obtain a tidy tibble with every variable name, its label and its
+value labels:
+
+``` r
+df   <- read_cis(3328)
+dict <- get_data_dictionary(df)
+print(dict)
+
+# Find variables whose label contains a keyword
+dict[grepl("sexo", dict$label, ignore.case = TRUE), ]
+
+# Inspect value labels for a specific variable
+dict$value_labels[[which(dict$variable == "SEXO")]]
+```
+
+------------------------------------------------------------------------
+
+### Getting study metadata
+
+[`get_metadata()`](https://opencis.spainelectoralproject.com/reference/get_metadata.md)
+retrieves the technical information sheet of a study from the CIS
+website — field dates, study type, country, authorship, thematic
+indices, etc. — and returns it as a two-column tibble (`field`,
+`value`):
+
+``` r
+meta <- get_metadata(3328)
+print(meta)
+```
+
+------------------------------------------------------------------------
+
+### Downloading the ZIP file to disk
+
+If you want to keep the raw data files instead of reading them into a
+temporary directory, use
+[`download_study()`](https://opencis.spainelectoralproject.com/reference/download_study.md).
+It saves the ZIP archive to any local folder:
+
+``` r
+# Save to the current working directory
+path <- download_study(3328)
+cat("Saved to:", path, "\n")
+
+# Save to a specific folder
+path <- download_study(3328, destdir = "data/raw")
+cat("Saved to:", path, "\n")
+```
+
+------------------------------------------------------------------------
+
+### Browsing the questionnaire and technical sheet
+
+[`browse_pdf()`](https://opencis.spainelectoralproject.com/reference/browse_pdf.md)
+extracts the PDF documents bundled inside the study ZIP and opens them
+in your default browser. CIS ZIPs typically include two PDFs:
+
+- **Questionnaire** (`wanted_file = "cues"`, default)
+- **Technical sheet** (`wanted_file = "ft"`)
+
+``` r
+# Open the questionnaire for study 3328
+browse_pdf(3328)
+
+# Open the technical sheet
+browse_pdf(3328, wanted_file = "ft")
 ```
