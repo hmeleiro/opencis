@@ -1,4 +1,4 @@
-\dontrun{
+if (interactive()) {
 # Open the questionnaire (cuestionario) for study 3328
 browse_pdf("3328")
 

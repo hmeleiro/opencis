@@ -9,3 +9,5 @@ new-features/
 /doc/
 /Meta/
 .positai
+*.tar.gz
+*.Rcheck

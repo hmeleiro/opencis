@@ -16,7 +16,7 @@ A data.frame with the study data.
 Download and import the data of a CIS study.
 }
 \examples{
-\dontrun{
+\donttest{
 # If you know the study code you can just read it into R
 df <- read_cis("3328")
 print(df)

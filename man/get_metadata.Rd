@@ -17,7 +17,7 @@ Retrieves the technical metadata of a CIS study from its detail page,
 including study dates, type, country, author, and thematic indices.
 }
 \examples{
-\dontrun{
+\donttest{
 # Get metadata for study 3328
 meta <- get_metadata("3328")
 print(meta)

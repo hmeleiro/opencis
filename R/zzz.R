@@ -1,12 +1,3 @@
-.onLoad <- function(libname, pkgname) {
-  # Wrap the two main HTTP-heavy functions with session-level caching.
-  # Repeated calls with identical arguments return the cached result
-  # without hitting the network again.
-  search_cis <<- memoise::memoise(search_cis)
-  read_cis   <<- memoise::memoise(read_cis)
-}
-
-
 #' Clear the opencis session cache
 #'
 #' Clears the in-memory cache used by \code{\link{search_cis}} and

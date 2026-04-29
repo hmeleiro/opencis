@@ -20,6 +20,8 @@ read_cis <- function(study_code) {
   return(data)
 }
 
+read_cis <- memoise::memoise(read_cis)
+
 
 #' Download and read a CIS study from a given URL
 #'

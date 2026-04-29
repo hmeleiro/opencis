@@ -21,12 +21,8 @@ instead of a temporary folder. Useful for projects that need to keep
 the raw data files.
 }
 \examples{
-\dontrun{
-# Save the ZIP file to the current directory
-path <- download_study("3328")
-cat("Saved to:", path, "\n")
-
-# Save to a specific folder
+\donttest{
+# Save the ZIP file to a temporary directory
 path <- download_study("3328", destdir = tempdir())
 cat("Saved to:", path, "\n")
 }

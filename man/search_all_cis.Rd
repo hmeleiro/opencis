@@ -39,7 +39,7 @@ Calls \code{\link{search_cis}} repeatedly, incrementing the page index until
 no more results are returned, and returns all results in a single tibble.
 }
 \examples{
-\dontrun{
+\donttest{
 # Retrieve all postelectoral studies (all pages)
 all_studies <- search_all_cis(q = "postelectoral")
 print(nrow(all_studies))

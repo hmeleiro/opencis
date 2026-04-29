@@ -1,4 +1,4 @@
-\dontrun{
+\donttest{
 # Search by search terms
 studies <- search_cis(q = "postelectoral")
 print(studies)

@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Héctor Meleiro \email{hmeleiro@gmail.com}
+\strong{Maintainer}: Héctor Meleiro \email{hmeleiros@gmail.com}
 
 }
 \keyword{internal}

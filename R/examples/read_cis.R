@@ -1,4 +1,4 @@
-\dontrun{
+\donttest{
 # If you know the study code you can just read it into R
 df <- read_cis("3328")
 print(df)

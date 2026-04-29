@@ -51,6 +51,8 @@ search_cis <- function(
   return(out)
 }
 
+search_cis <- memoise::memoise(search_cis)
+
 #' Parse CIS study search results
 #'
 #' @param resp The HTTP response object from the CIS search.

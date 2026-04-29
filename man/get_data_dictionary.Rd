@@ -24,9 +24,15 @@ Returns a tibble listing each variable in the data along with its
 variable label and value labels, as loaded by \code{haven}.
 }
 \examples{
-\dontrun{
-# Load a study and inspect its variable dictionary
-df <- read_cis("3328")
+# Create a small labelled data frame
+df <- data.frame(
+  SEXO = haven::labelled(c(1, 2, 1), labels = c(Hombre = 1, Mujer = 2)),
+  EDAD = c(34, 51, 29)
+)
+attr(df$SEXO, "label") <- "Sexo"
+attr(df$EDAD, "label") <- "Edad"
+
+# Inspect its variable dictionary
 dict <- get_data_dictionary(df)
 print(dict)
 
@@ -34,6 +40,8 @@ print(dict)
 dict[grepl("sexo", dict$label, ignore.case = TRUE), ]
 
 # Inspect value labels for a specific variable
-dict$value_labels[[which(dict$variable == "SEXO")]]
+sex_var <- match("SEXO", dict$variable)
+if (!is.na(sex_var)) {
+  dict$value_labels[[sex_var]]
 }
 }

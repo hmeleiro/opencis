@@ -1,4 +1,4 @@
-\dontrun{
+\donttest{
 # Get metadata for study 3328
 meta <- get_metadata("3328")
 print(meta)
