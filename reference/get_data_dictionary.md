@@ -36,16 +36,35 @@ A tibble with columns:
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-# Load a study and inspect its variable dictionary
-df <- read_cis("3328")
+# Create a small labelled data frame
+df <- data.frame(
+  SEXO = haven::labelled(c(1, 2, 1), labels = c(Hombre = 1, Mujer = 2)),
+  EDAD = c(34, 51, 29)
+)
+attr(df$SEXO, "label") <- "Sexo"
+attr(df$EDAD, "label") <- "Edad"
+
+# Inspect its variable dictionary
 dict <- get_data_dictionary(df)
 print(dict)
+#> # A tibble: 2 × 3
+#>   variable label value_labels
+#>   <chr>    <chr> <named list>
+#> 1 SEXO     Sexo  <dbl [2]>   
+#> 2 EDAD     Edad  <NULL>      
 
 # Find variables with a specific keyword in their label
 dict[grepl("sexo", dict$label, ignore.case = TRUE), ]
+#> # A tibble: 1 × 3
+#>   variable label value_labels
+#>   <chr>    <chr> <named list>
+#> 1 SEXO     Sexo  <dbl [2]>   
 
 # Inspect value labels for a specific variable
-dict$value_labels[[which(dict$variable == "SEXO")]]
-} # }
+sex_var <- match("SEXO", dict$variable)
+if (!is.na(sex_var)) {
+  dict$value_labels[[sex_var]]
+}
+#> Hombre  Mujer 
+#>      1      2 
 ```

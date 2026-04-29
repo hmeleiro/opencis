@@ -20,4 +20,4 @@ Useful links:
 
 ## Author
 
-**Maintainer**: Héctor Meleiro <hmeleiro@gmail.com>
+**Maintainer**: Héctor Meleiro <hmeleiros@gmail.com>

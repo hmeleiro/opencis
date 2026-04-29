@@ -28,13 +28,10 @@ The path to the saved ZIP file, invisibly.
 ## Examples
 
 ``` r
-if (FALSE) { # \dontrun{
-# Save the ZIP file to the current directory
-path <- download_study("3328")
-cat("Saved to:", path, "\n")
-
-# Save to a specific folder
+# \donttest{
+# Save the ZIP file to a temporary directory
 path <- download_study("3328", destdir = tempdir())
 cat("Saved to:", path, "\n")
-} # }
+#> Saved to: /tmp/Rtmp7DuhTg/MD3328.zip 
+# }
 ```
