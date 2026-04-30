@@ -3,7 +3,8 @@
 .RData
 .Ruserdata
 .copilot-instructions.md
-docs
+docs/*
+!docs/logo.png
 inst/doc
 new-features/
 /doc/

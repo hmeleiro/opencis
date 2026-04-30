@@ -1,4 +1,4 @@
-# opencis
+# opencis <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
 <!-- badges: start -->
 [![CRAN version](https://www.r-pkg.org/badges/version/opencis)](https://CRAN.R-project.org/package=opencis)
