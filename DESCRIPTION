@@ -27,6 +27,7 @@ Imports:
     stringr (>= 1.0.0),
     memoise (>= 2.0.0)
 URL: https://opencis.spainelectoralproject.com,
+    https://CRAN.R-project.org/package=opencis,
     https://github.com/hmeleiro/opencis
 BugReports: https://github.com/hmeleiro/opencis/issues
 Suggests: 
