@@ -9,7 +9,14 @@ questions and timeseries, and import the data directly to R.
 
 ## Installation
 
-You can install `opencis` from Github using the `remotes` package:
+You can install the released version of `opencis` from CRAN:
+
+``` r
+install.packages("opencis")
+```
+
+You can install the development version from GitHub using the `remotes`
+package:
 
 ``` r
 remotes::install_github("hmeleiro/opencis")

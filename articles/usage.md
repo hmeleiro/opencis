@@ -2,10 +2,17 @@
 
 ## Installation
 
-You can install `opencis` from Github using the `devtools` package:
+You can install the released version of `opencis` from CRAN:
 
 ``` r
-devtools::install_github("hmeleiro/opencis")
+install.packages("opencis")
+```
+
+You can install the development version from GitHub using the `remotes`
+package:
+
+``` r
+remotes::install_github("hmeleiro/opencis")
 ```
 
 ## Usage
