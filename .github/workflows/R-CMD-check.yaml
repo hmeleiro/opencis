@@ -8,6 +8,9 @@ on:
 
 name: R-CMD-check
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
@@ -34,7 +37,7 @@ jobs:
         run: |
           brew install xquartz
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
 
       - uses: r-lib/actions/setup-pandoc@v2
 
