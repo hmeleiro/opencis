@@ -67,10 +67,8 @@ parse_study <- function(resp) {
     html_elements(".card-content") %>%
     html_element("a")
 
-
   titles <- html_attr(a, name = "title")
   urls <- html_attr(a, "href")
-
 
   card_info <- html %>%
     html_elements(".card-content") %>%
@@ -78,11 +76,11 @@ parse_study <- function(resp) {
 
   card_info <-
     map(card_info, function(x) {
-      date <- html_elements(x, "li")[1]
-      study <- html_elements(x, "li")[2]
+      study <- html_elements(x, "li")[1]
+      date <- html_elements(x, "li")[2]
       date <- html_text(date)
       date <- as.Date(date, "%d/%m/%Y")
-      study <- html_text(study)
+      study <- html_text(study, trim = T)
       study <- gsub("^Estudio\\s+", "", study)
       tibble(study, date)
     }) %>%
