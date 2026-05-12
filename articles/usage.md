@@ -5,6 +5,7 @@
 You can install the released version of `opencis` from CRAN:
 
 ``` r
+
 install.packages("opencis")
 ```
 
@@ -12,6 +13,7 @@ You can install the development version from GitHub using the `remotes`
 package:
 
 ``` r
+
 remotes::install_github("hmeleiro/opencis")
 ```
 
@@ -27,6 +29,7 @@ results to a date range with `from` and `to`, and change the sort order
 with `sort` (`"relevance"`, `"publishDate-"`, `"publishDate+"`).
 
 ``` r
+
 library(opencis)
 
 # Search for survey studies
@@ -47,6 +50,7 @@ to automatically paginate through all pages and get every matching
 result in a single tibble:
 
 ``` r
+
 # Retrieve all postelectoral studies (all pages)
 all_studies <- search_all_cis(q = "postelectoral")
 print(nrow(all_studies))
@@ -72,6 +76,7 @@ downloads the SPSS data file for a study and imports it directly into R
 as a labelled data frame (via `haven`):
 
 ``` r
+
 df <- read_cis(3411)
 print(df)
 ```
@@ -88,6 +93,7 @@ to obtain a tidy tibble with every variable name, its label and its
 value labels:
 
 ``` r
+
 df   <- read_cis(3328)
 dict <- get_data_dictionary(df)
 print(dict)
@@ -110,6 +116,7 @@ indices, etc. — and returns it as a two-column tibble (`field`,
 `value`):
 
 ``` r
+
 meta <- get_metadata(3328)
 print(meta)
 ```
@@ -124,6 +131,7 @@ temporary directory, use
 It saves the ZIP archive to any local folder:
 
 ``` r
+
 # Save to the current working directory
 path <- download_study(3328)
 cat("Saved to:", path, "\n")
@@ -145,6 +153,7 @@ in your default browser. CIS ZIPs typically include two PDFs:
 - **Technical sheet** (`wanted_file = "ft"`)
 
 ``` r
+
 # Open the questionnaire for study 3328
 browse_pdf(3328)
 

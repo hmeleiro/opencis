@@ -12,6 +12,7 @@ questions and timeseries, and import the data directly to R.
 You can install the released version of `opencis` from CRAN:
 
 ``` r
+
 install.packages("opencis")
 ```
 
@@ -19,6 +20,7 @@ You can install the development version from GitHub using the `remotes`
 package:
 
 ``` r
+
 remotes::install_github("hmeleiro/opencis")
 ```
 
@@ -30,6 +32,7 @@ The first function is used to search for surveys, survey questions and
 data series
 
 ``` r
+
 # Search for survey studies
 library(opencis)
 
@@ -91,6 +94,7 @@ search_cis(q = "situación económica", catalogo = "serie")
 The second function is used to import the data directly into R.
 
 ``` r
+
 # Read a survey study
 df <- read_cis(3411)
 print(df)
