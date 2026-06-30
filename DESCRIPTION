@@ -1,9 +1,9 @@
 Package: opencis
 Type: Package
 Title: Import Data from Spanish Sociological Research Center (CIS)
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
-    person("Héctor", "Meleiro", email = "hmeleiros@gmail.com", role = c("aut", "cre"))
+    person("Héctor", "Meleiro", email = "hmeleiros@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0009-0003-4468-2197"))
   )
 Description: Search and import data directly to R from the Spanish Sociological
     Research Center (CIS) <https://www.cis.es/inicio>. The CIS is a public
