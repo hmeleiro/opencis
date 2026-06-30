@@ -102,10 +102,8 @@ studies <- search_cis(q = "ideologia",
                           from = "2011-01-01",
                           to = "2020-01-01",
                           catalogo = "serie")
+#> Warning: HTTP 429 while searching CIS catalog for 'https://www.cis.es/es/estudios/catalogo?start=1&q=ideologia&fromDate=2011-01-01&from=%5B20110101000000%20now%5D&toDate=2020-01-01&to=%5Bnow-100y%2020200101235959%5D&sort=&catalogo=serie'.
 print(studies)
-#> # A tibble: 1 × 5
-#>   serie      from   to         title                                       url  
-#>   <chr>      <date> <date>     <chr>                                       <chr>
-#> 1 21/09/2017 NA     1993-03-23 Grado de aceptación en España de un posibl… http…
+#> NULL
 # }
 ```

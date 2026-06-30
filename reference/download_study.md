@@ -32,6 +32,6 @@ The path to the saved ZIP file, invisibly.
 # Save the ZIP file to a temporary directory
 path <- download_study("3328", destdir = tempdir())
 cat("Saved to:", path, "\n")
-#> Saved to: /tmp/RtmprEPFXY/MD3328.zip 
+#> Saved to: /tmp/Rtmpy3EeZi/MD3328.zip 
 # }
 ```
