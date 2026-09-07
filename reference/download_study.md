@@ -28,10 +28,9 @@ The path to the saved ZIP file, invisibly.
 ## Examples
 
 ``` r
-# \donttest{
+if (interactive()) {
 # Save the ZIP file to a temporary directory
 path <- download_study("3328", destdir = tempdir())
 cat("Saved to:", path, "\n")
-#> Saved to: /tmp/RtmpNb7K1Z/MD3328.zip 
-# }
+}
 ```

@@ -34,5 +34,7 @@ Functions to retrieve metadata and documents for a specific study.
 
 Helper functions for cache management.
 
+- [`cache_info()`](https://opencis.spainelectoralproject.com/reference/cache_info.md)
+  : Inspect the opencis HTTP cache
 - [`clear_cache()`](https://opencis.spainelectoralproject.com/reference/clear_cache.md)
   : Clear the opencis session cache

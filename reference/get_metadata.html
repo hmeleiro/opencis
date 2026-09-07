@@ -9,7 +9,7 @@ including study dates, type, country, author, and thematic indices."><meta prope
 
     <a class="navbar-brand me-2" href="../index.html">opencis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,27 +63,14 @@ including study dates, type, country, author, and thematic indices.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># Get metadata for study 3328</span></span></span>
 <span class="r-in"><span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu">get_metadata</span><span class="op">(</span><span class="st">"3328"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 9 × 2</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   field             value                                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Fecha de estudio  <span style="color: #949494;">"</span>18/06/2021<span style="color: #949494;">"</span>                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> Código            <span style="color: #949494;">"</span>3328<span style="color: #949494;">"</span>                                                      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> Tipo de estudio   <span style="color: #949494;">"</span>Cuantitativo<span style="color: #949494;">"</span>                                              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> País              <span style="color: #949494;">"</span>España<span style="color: #949494;">"</span>                                                    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> Autor             <span style="color: #949494;">"</span>CIS<span style="color: #949494;">"</span>                                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> Encargo           <span style="color: #949494;">"</span>CIS<span style="color: #949494;">"</span>                                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> Colecciones       <span style="color: #949494;">"</span>Ver (2)<span style="color: #949494;">"</span>                                                   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">8</span> Índices temáticos <span style="color: #949494;">"</span>Cultura política; Partidos y líderes políticos; Elecciones…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">9</span> Publicación       <span style="color: #949494;">"</span>FUERA DE COLECCIÓN CIS -\n                                …</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Access a specific field</span></span></span>
 <span class="r-in"><span><span class="va">meta</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="va">meta</span><span class="op">$</span><span class="va">field</span> <span class="op">==</span> <span class="st">"Tipo de estudio"</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Cuantitativo"</span>
-<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -95,7 +82,7 @@ including study dates, type, country, author, and thematic indices.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Licensed under <a href="https://www.gnu.org/licenses/gpl-3.0" target="_blank" rel="noopener" class="external-link">GPL-3</a>. Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Licensed under <a href="https://www.gnu.org/licenses/gpl-3.0" target="_blank" rel="noopener" class="external-link">GPL-3</a>. Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>
