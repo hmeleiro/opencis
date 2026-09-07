@@ -1,4 +1,4 @@
-\donttest{
+if (interactive()) {
 # Search by search terms
 studies <- search_cis(q = "postelectoral")
 print(studies)

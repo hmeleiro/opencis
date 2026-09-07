@@ -60,4 +60,5 @@ reference:
 - title: Utilities
   desc:  Helper functions for cache management.
   contents:
+  - cache_info
   - clear_cache

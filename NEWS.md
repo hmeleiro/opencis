@@ -32,3 +32,6 @@
 * Added automated tests covering proof-of-work calculation, challenge parsing,
   session reuse, persistent response caching, binary downloads, cache clearing,
   and exclusion of sensitive or unsuccessful responses.
+
+* Network-dependent examples now run only in interactive sessions so package
+  checks do not depend on the availability of the external CIS service.

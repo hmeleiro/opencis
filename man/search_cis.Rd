@@ -37,7 +37,7 @@ A data.frame with the search results.
 Searches for CIS studies using the CIS search engine.
 }
 \examples{
-\donttest{
+if (interactive()) {
 # Search by search terms
 studies <- search_cis(q = "postelectoral")
 print(studies)
