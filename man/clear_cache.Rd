@@ -4,13 +4,19 @@
 \alias{clear_cache}
 \title{Clear the opencis session cache}
 \usage{
-clear_cache()
+clear_cache(disk = TRUE)
+}
+\arguments{
+\item{disk}{Logical. If \code{TRUE} (the default), also remove all entries
+from the persistent HTTP cache. Set it to \code{FALSE} to retain downloaded
+responses between sessions.}
 }
 \value{
 \code{NULL} invisibly.
 }
 \description{
 Clears the in-memory cache used by \code{\link{search_cis}} and
-\code{\link{read_cis}}. Call this when you want to force fresh data
-to be retrieved from the CIS server within the same R session.
+\code{\link{read_cis}}, the persistent HTTP disk cache, and the HTTP sessions
+and their cookies. Call this to force fresh data or a fresh CIS anti-bot
+verification.
 }
