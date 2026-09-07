@@ -5,7 +5,7 @@ template:
 lang: en
 navbar:
   structure:
-    left:  [intro, reference, articles]
+    left:  [intro, reference, articles, news]
     right: [github, twitter, search]
   components:
     github:
