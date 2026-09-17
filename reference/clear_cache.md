@@ -1,8 +1,6 @@
 # Clear the opencis session cache
 
 Clears the in-memory cache used by
-[`search_cis`](https://opencis.spainelectoralproject.com/reference/search_cis.md)
-and
 [`read_cis`](https://opencis.spainelectoralproject.com/reference/read_cis.md),
 the persistent HTTP disk cache, and the HTTP sessions and their cookies.
 Call this to force fresh data or a fresh CIS anti-bot verification.

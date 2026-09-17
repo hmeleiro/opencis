@@ -9,7 +9,7 @@ no more results are returned, and returns all results in a single tibble."><meta
 
     <a class="navbar-brand me-2" href="../index.html">opencis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,8 @@ no more results are returned, and returns all results in a single tibble.</p>
 <span>  to <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sort <span class="op">=</span> <span class="st">"relevance"</span>,</span>
 <span>  catalogo <span class="op">=</span> <span class="st">"estudio"</span>,</span>
-<span>  <span class="va">...</span></span>
+<span>  <span class="va">...</span>,</span>
+<span>  start <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -88,10 +89,28 @@ Default is <code>"relevance"</code>.</p></dd>
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional parameters passed to <code><a href="search_cis.html">search_cis</a></code>.</p></dd>
 
+
+<dt id="arg-start">start<a class="anchor" aria-label="anchor" href="#arg-start"></a></dt>
+<dd><p>Integer. First page to retrieve, default 1. Use the returned
+<code>next_page</code> attribute to resume an interrupted search with the same filters.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A tibble with all search results across all pages.</p>
+    <p>A tibble with search results and a logical <code>complete</code> attribute.
+On HTTP failure, warns and returns the collected rows with
+<code>complete = FALSE</code> and a <code>next_page</code> attribute for resuming.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>Network GET requests are spaced by at least one second per origin
+within the R session. Configure this with <code>options(opencis.request_interval = 2)</code>
+(seconds). HTTP 429 responses are retried up to five times, respecting
+<code>Retry-After</code> or using exponential backoff with jitter (up to 60 seconds).
+Set <code>options(opencis.max_retries = 8)</code> to change the retry limit; zero
+disables retries. Cached responses do not wait or use the network.
+Resuming retrieves only the remaining pages; combine them with the saved rows.
+Page positions may change if the remote catalog changes between calls.</p>
     </div>
 
     <div class="section level2">

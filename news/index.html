@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">opencis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,20 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.2" id="opencis-012">opencis 0.1.2<a class="anchor" aria-label="anchor" href="#opencis-012"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.1.3" id="opencis-013">opencis 0.1.3<a class="anchor" aria-label="anchor" href="#opencis-013"></a></h2>
+<div class="section level3">
+<h3 id="improvements-0-1-3">Improvements<a class="anchor" aria-label="anchor" href="#improvements-0-1-3"></a></h3>
+<ul><li><p>Network GET requests are now spaced by one second per origin within each R session. HTTP 429 responses retry up to five times, respecting <code>Retry-After</code> (seconds or HTTP date) or using exponential backoff with jitter capped at 60 seconds. Configure this with <code>opencis.request_interval</code> and <code>opencis.max_retries</code>. Cached responses do not wait or use the network.</p></li>
+<li><p><code><a href="../reference/search_all_cis.html">search_all_cis()</a></code> now distinguishes failed requests from the end of the catalog. It warns explicitly when results are incomplete, returns the rows collected so far with <code>complete = FALSE</code> and <code>next_page</code> attributes, and accepts <code>start</code> to resume with the same filters. Successful searches have <code>complete = TRUE</code>.</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-0-1-3">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-3"></a></h3>
+<ul><li><p>Failed <code><a href="../reference/search_cis.html">search_cis()</a></code> calls are no longer memoised, allowing later calls to retry the failed page. Successful HTTP responses retain the disk cache.</p></li>
+<li><p>Added regression tests for rate limiting, retry exhaustion, <code>Retry-After</code> parsing, retries after anti-bot verification, and incomplete search recovery.</p></li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.2" id="opencis-012">opencis 0.1.2<a class="anchor" aria-label="anchor" href="#opencis-012"></a></h2><p class="text-muted">CRAN release: 2026-09-07</p>
 <div class="section level3">
 <h3 id="new-features-0-1-2">New features<a class="anchor" aria-label="anchor" href="#new-features-0-1-2"></a></h3>
 <ul><li><p>Added automatic handling of the CIS proof-of-work anti-bot challenge. HTTP requests now keep a stable session and user agent, preserve cookies, extract the challenge parameters from the returned HTML, solve the SHA-256 proof of work, submit it to the CIS endpoint, and retry the original request.</p></li>
