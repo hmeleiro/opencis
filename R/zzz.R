@@ -1,7 +1,7 @@
 #' Clear the opencis session cache
 #'
-#' Clears the in-memory cache used by \code{\link{search_cis}} and
-#' \code{\link{read_cis}}, the persistent HTTP disk cache, and the HTTP sessions
+#' Clears the in-memory cache used by \code{\link{read_cis}},
+#' the persistent HTTP disk cache, and the HTTP sessions
 #' and their cookies. Call this to force fresh data or a fresh CIS anti-bot
 #' verification.
 #'
@@ -13,7 +13,6 @@
 #'
 #' @export
 clear_cache <- function(disk = TRUE) {
-  memoise::forget(search_cis)
   memoise::forget(read_cis)
   if (isTRUE(disk)) {
     cis_clear_disk_cache()

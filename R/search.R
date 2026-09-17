@@ -51,7 +51,7 @@ search_cis <- function(
   return(out)
 }
 
-search_cis <- memoise::memoise(search_cis)
+# Successful HTTP responses are cached by cis_get(). Do not memoise NULL failures.
 
 #' Parse CIS study search results
 #'
@@ -315,8 +315,20 @@ cis_catalog_url_date <- function(
 #' @param catalogo String. The catalog type (\code{"estudio"}, \code{"pregunta"},
 #'   \code{"serie"}). Default is \code{"estudio"}.
 #' @param ... Additional parameters passed to \code{\link{search_cis}}.
+#' @param start Integer. First page to retrieve, default 1. Use the returned
+#'   \code{next_page} attribute to resume an interrupted search with the same filters.
 #'
-#' @return A tibble with all search results across all pages.
+#' @return A tibble with search results and a logical \code{complete} attribute.
+#'   On HTTP failure, warns and returns the collected rows with
+#'   \code{complete = FALSE} and a \code{next_page} attribute for resuming.
+#' @details Network GET requests are spaced by at least one second per origin
+#'   within the R session. Configure this with \code{options(opencis.request_interval = 2)}
+#'   (seconds). HTTP 429 responses are retried up to five times, respecting
+#'   \code{Retry-After} or using exponential backoff with jitter (up to 60 seconds).
+#'   Set \code{options(opencis.max_retries = 8)} to change the retry limit; zero
+#'   disables retries. Cached responses do not wait or use the network.
+#'   Resuming retrieves only the remaining pages; combine them with the saved rows.
+#'   Page positions may change if the remote catalog changes between calls.
 #'
 #' @export
 #'
@@ -327,10 +339,16 @@ search_all_cis <- function(
   to = NULL,
   sort = "relevance",
   catalogo = "estudio",
-  ...
+  ...,
+  start = 1
 ) {
+  if (!is.numeric(start) || length(start) != 1 || !is.finite(start) ||
+      start < 1 || start != floor(start)) {
+    stop("'start' must be a positive integer.", call. = FALSE)
+  }
   all_results <- list()
-  page <- 1
+  page <- start
+  complete <- TRUE
 
   repeat {
     results <- search_cis(
@@ -343,17 +361,24 @@ search_all_cis <- function(
       ...
     )
 
-    if (is.null(results) || nrow(results) == 0) break
+    if (is.null(results)) {
+      complete <- FALSE
+      warning(sprintf(
+        "Incomplete CIS search: page %s failed. Resume with start = %s and the same filters.",
+        page, page
+      ), call. = FALSE)
+      break
+    }
+    if (nrow(results) == 0) break
 
-    all_results[[page]] <- results
+    all_results[[length(all_results) + 1L]] <- results
     page <- page + 1
   }
 
-  if (length(all_results) == 0) {
-    return(tibble())
-  }
-
-  list_rbind(all_results)
+  out <- if (length(all_results) == 0) tibble() else list_rbind(all_results)
+  attr(out, "complete") <- complete
+  if (!complete) attr(out, "next_page") <- page
+  out
 }
 
 

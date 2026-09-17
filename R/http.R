@@ -1,5 +1,64 @@
 .opencis_http_state <- new.env(parent = emptyenv())
 .opencis_http_state$sessions <- new.env(parent = emptyenv())
+.opencis_http_state$last_request <- new.env(parent = emptyenv())
+
+cis_http_option <- function(name, default) {
+  value <- getOption(name, default)
+  if (!is.numeric(value) || length(value) != 1 || !is.finite(value) || value < 0) {
+    return(default)
+  }
+  value
+}
+
+cis_http_sleep <- function(seconds) Sys.sleep(seconds)
+
+cis_throttle <- function(url) {
+  origin <- cis_url_origin(url)
+  interval <- cis_http_option("opencis.request_interval", 1)
+  last <- .opencis_http_state$last_request[[origin]]
+  now <- unname(proc.time()[["elapsed"]])
+  if (!is.null(last)) {
+    delay <- interval - (now - last)
+    if (delay > 0) cis_http_sleep(delay)
+  }
+  .opencis_http_state$last_request[[origin]] <- unname(proc.time()[["elapsed"]])
+}
+
+cis_retry_after <- function(resp, now = Sys.time()) {
+  headers <- as.list(httr::headers(resp))
+  names(headers) <- tolower(names(headers))
+  value <- headers[["retry-after"]]
+  if (is.null(value) || length(value) != 1 || is.na(value)) return(NULL)
+  value <- trimws(value)
+  if (grepl("^[0-9]+$", value)) {
+    seconds <- suppressWarnings(as.numeric(value))
+  } else {
+    date <- tryCatch(httr::parse_http_date(value), error = function(e) NA)
+    seconds <- as.numeric(difftime(date, now, units = "secs"))
+  }
+  if (length(seconds) != 1 || !is.finite(seconds)) return(NULL)
+  max(0, seconds)
+}
+
+cis_get_with_retry <- function(url, session, ...) {
+  retries <- floor(cis_http_option("opencis.max_retries", 5))
+  attempt <- 0
+  repeat {
+    cis_throttle(url)
+    resp <- cis_perform_get(url, session, ...)
+    if (httr::status_code(resp) != 429 || attempt >= retries) return(resp)
+    delay <- cis_retry_after(resp)
+    if (is.null(delay)) {
+      # Exponential backoff with jitter, capped at 60 seconds.
+      cap <- min(60, 2^(attempt + 1))
+      delay <- stats::runif(1, cap / 2, cap)
+    }
+    delay <- max(1, delay)
+    attempt <- attempt + 1
+    message(sprintf("HTTP 429. Retrying in %.1f seconds (%s/%s).", delay, attempt, retries))
+    cis_http_sleep(delay)
+  }
+}
 
 cis_request_timeout <- function() {
   timeout <- getOption("opencis.timeout", 20)
@@ -107,6 +166,7 @@ cis_http_session <- function(url) {
 cis_reset_http_sessions <- function() {
   sessions <- .opencis_http_state$sessions
   rm(list = ls(envir = sessions, all.names = TRUE), envir = sessions)
+  .opencis_http_state$last_request <- new.env(parent = emptyenv())
   invisible(NULL)
 }
 
@@ -329,7 +389,7 @@ cis_get <- function(url, ..., required = FALSE, context = "request") {
 
   session <- cis_http_session(url)
   resp <- tryCatch(
-    cis_perform_get(url, session, ...),
+    cis_get_with_retry(url, session, ...),
     error = function(e) {
       if (required) {
         stop(sprintf("Failed %s for '%s': %s", context, url, conditionMessage(e)), call. = FALSE)
@@ -375,7 +435,7 @@ cis_get <- function(url, ..., required = FALSE, context = "request") {
     }
 
     resp <- tryCatch(
-      cis_perform_get(url, session, ...),
+      cis_get_with_retry(url, session, ...),
       error = function(e) {
         if (required) {
           stop(sprintf("Failed %s for '%s': %s", context, url, conditionMessage(e)), call. = FALSE)
