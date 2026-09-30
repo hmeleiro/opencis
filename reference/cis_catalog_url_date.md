@@ -26,7 +26,10 @@ cis_catalog_url_date(
 
 - q:
 
-  String. The search query. Default is an empty string.
+  A single character string containing a simple search or an advanced
+  Lucene query. Advanced queries must start with `*`; pass them as plain
+  text because URL encoding is handled by the package. Default is an
+  empty string.
 
 - from:
 

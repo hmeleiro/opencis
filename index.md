@@ -91,6 +91,41 @@ search_cis(q = "situación económica", catalogo = "serie")
 #> # ℹ Use `print(n = ...)` to see more rows
 ```
 
+### Advanced search
+
+The `q` argument also accepts the [advanced Lucene syntax supported by
+the CIS catalog](https://www.cis.es/es/estudios/catalogo). Start an
+advanced query with `*` and pass it as plain text; `opencis` handles URL
+encoding.
+
+``` r
+
+# Search for several study codes
+search_cis(q = "*surveyCode:(2610 OR 2829 OR 2956)")
+
+# Require and exclude terms in a specific field
+search_cis(q = "*title_es_ES:(+barometro +2024 -sanitario)")
+
+# Search question text and retrieve every result page
+search_all_cis(
+  q = "*question_es_ES:(divorcio)",
+  catalogo = "pregunta"
+)
+
+# Combine fields: questions about divorce from studies after number 3540
+search_all_cis(
+  q = "*question_es_ES:(divorcio) AND surveyCodeNumber:{3540 TO *]",
+  catalogo = "pregunta"
+)
+
+# Search for an exact phrase
+search_cis(q = '*title_es_ES:"barómetro de la vivienda"')
+```
+
+Advanced expressions are interpreted by the CIS server. Invalid syntax
+may return no results, and relevance ordering can differ from a simple
+search.
+
 The second function is used to import the data directly into R.
 
 ``` r

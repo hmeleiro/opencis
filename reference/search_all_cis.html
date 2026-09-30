@@ -9,7 +9,7 @@ no more results are returned, and returns all results in a single tibble."><meta
 
     <a class="navbar-brand me-2" href="../index.html">opencis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,9 @@ no more results are returned, and returns all results in a single tibble.</p>
 
 
 <dl><dt id="arg-q">q<a class="anchor" aria-label="anchor" href="#arg-q"></a></dt>
-<dd><p>String. The search query. Default is an empty string.</p></dd>
+<dd><p>A single character string containing a simple search or an advanced
+Lucene query. Advanced queries must start with <code>*</code>; pass them as plain text
+because URL encoding is handled by the package. Default is an empty string.</p></dd>
 
 
 <dt id="arg-from">from<a class="anchor" aria-label="anchor" href="#arg-from"></a></dt>
@@ -111,6 +113,8 @@ Set <code>options(opencis.max_retries = 8)</code> to change the retry limit; zer
 disables retries. Cached responses do not wait or use the network.
 Resuming retrieves only the remaining pages; combine them with the saved rows.
 Page positions may change if the remote catalog changes between calls.</p>
+<p>Advanced Lucene queries supported by <code><a href="search_cis.html">search_cis()</a></code> can also be supplied
+through <code>q</code>; the same expression is retained across every requested page.</p>
     </div>
 
     <div class="section level2">

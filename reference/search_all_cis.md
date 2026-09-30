@@ -23,7 +23,10 @@ search_all_cis(
 
 - q:
 
-  String. The search query. Default is an empty string.
+  A single character string containing a simple search or an advanced
+  Lucene query. Advanced queries must start with `*`; pass them as plain
+  text because URL encoding is handled by the package. Default is an
+  empty string.
 
 - from:
 
@@ -74,6 +77,11 @@ disables retries. Cached responses do not wait or use the network.
 Resuming retrieves only the remaining pages; combine them with the saved
 rows. Page positions may change if the remote catalog changes between
 calls.
+
+Advanced Lucene queries supported by
+[`search_cis()`](https://opencis.spainelectoralproject.com/reference/search_cis.md)
+can also be supplied through `q`; the same expression is retained across
+every requested page.
 
 ## Examples
 

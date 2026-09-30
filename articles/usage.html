@@ -27,7 +27,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">opencis</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,10 +109,131 @@ restrict results to a date range with <code>from</code> and
 <span></span>
 <span><span class="co"># Search for data series</span></span>
 <span><span class="fu"><a href="../reference/search_cis.html">search_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"situación económica"</span>, catalogo <span class="op">=</span> <span class="st">"serie"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level4">
+<h4 id="advanced-search">Advanced search<a class="anchor" aria-label="anchor" href="#advanced-search"></a>
+</h4>
+<p>The <code>q</code> argument accepts the <a href="https://www.cis.es/es/estudios/catalogo" class="external-link">advanced Lucene syntax
+supported by the CIS catalog</a>. An advanced expression must start with
+<code>*</code>. Pass the expression as plain text; <code>opencis</code>
+handles URL encoding.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Match any of several study codes</span></span>
+<span><span class="fu"><a href="../reference/search_cis.html">search_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"*surveyCode:(2610 OR 2829 OR 2956)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Require barometro and 2024 in the title, but exclude sanitario</span></span>
+<span><span class="fu"><a href="../reference/search_cis.html">search_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"*title_es_ES:(+barometro +2024 -sanitario)"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Search question text and retrieve every result page</span></span>
+<span><span class="fu"><a href="../reference/search_all_cis.html">search_all_cis</a></span><span class="op">(</span></span>
+<span>  q <span class="op">=</span> <span class="st">"*question_es_ES:(divorcio)"</span>,</span>
+<span>  catalogo <span class="op">=</span> <span class="st">"pregunta"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Combine fields: questions about divorce from studies after number 3540</span></span>
+<span><span class="fu"><a href="../reference/search_all_cis.html">search_all_cis</a></span><span class="op">(</span></span>
+<span>  q <span class="op">=</span> <span class="st">"*question_es_ES:(divorcio) AND surveyCodeNumber:{3540 TO *]"</span>,</span>
+<span>  catalogo <span class="op">=</span> <span class="st">"pregunta"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Search for an exact phrase</span></span>
+<span><span class="fu"><a href="../reference/search_cis.html">search_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">'*title_es_ES:"barómetro de la vivienda"'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Search a numeric study-code range (used in the CIS documentation)</span></span>
+<span><span class="fu"><a href="../reference/search_cis.html">search_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"*(surveyCodeNumber:[3000 TO 3002])"</span><span class="op">)</span></span></code></pre></div>
+<p>The CIS documents the following searchable fields. Catalog data are
+currently indexed only in Spanish (<code>es_ES</code>).</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Field</th>
+<th align="left">Indexing</th>
+<th align="left">Contents</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>surveyCode</code></td>
+<td align="left">keyword</td>
+<td align="left">Study code</td>
+</tr>
+<tr class="even">
+<td align="left"><code>questionCode</code></td>
+<td align="left">keyword</td>
+<td align="left">Question code</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>serieCode</code></td>
+<td align="left">keyword</td>
+<td align="left">Series code</td>
+</tr>
+<tr class="even">
+<td align="left"><code>title_es_ES</code></td>
+<td align="left">text</td>
+<td align="left">Study, question, or series title</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>description_es_ES</code></td>
+<td align="left">text</td>
+<td align="left">Study or series description</td>
+</tr>
+<tr class="even">
+<td align="left"><code>publishDate</code></td>
+<td align="left">text</td>
+<td align="left">Study/question date, or latest series date</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>question_es_ES</code></td>
+<td align="left">text</td>
+<td align="left">Study question wording</td>
+</tr>
+<tr class="even">
+<td align="left"><code>questionText_es_ES</code></td>
+<td align="left">text</td>
+<td align="left">Study question text</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>descriptors_es_ES</code></td>
+<td align="left">text</td>
+<td align="left">Question descriptors</td>
+</tr>
+<tr class="even">
+<td align="left"><code>collections_es_ES</code></td>
+<td align="left">text</td>
+<td align="left">Study collection names</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>publications_es_ES</code></td>
+<td align="left">text</td>
+<td align="left">Study publication names</td>
+</tr>
+<tr class="even">
+<td align="left"><code>subjectIndexes_es_ES</code></td>
+<td align="left">text</td>
+<td align="left">Study subject indexes</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>orders_es_ES</code></td>
+<td align="left">text</td>
+<td align="left">Study commissioners</td>
+</tr>
+<tr class="even">
+<td align="left"><code>authors_es_ES</code></td>
+<td align="left">text</td>
+<td align="left">Study authors</td>
+</tr>
+</tbody>
+</table>
+<p>The CIS also uses <code>surveyCodeNumber</code> in its numeric-range
+example, although it is not included in the site’s field table. Treat
+that field as server-specific and potentially less stable than the
+documented list.</p>
+<p>Lucene expressions can combine <code>AND</code>, <code>OR</code>,
+required terms (<code>+</code>), excluded terms (<code>-</code>), quoted
+phrases, ranges, and term boosting with <code>^</code>. Invalid syntax
+may return no results. Advanced searches also use a different relevance
+order from simple searches and do not highlight matches.</p>
 <p>By default <code><a href="../reference/search_cis.html">search_cis()</a></code> returns only the first page of
 results. Use <code><a href="../reference/search_all_cis.html">search_all_cis()</a></code> to automatically paginate
 through all pages and get every matching result in a single tibble:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Retrieve all postelectoral studies (all pages)</span></span>
 <span><span class="va">all_studies</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/search_all_cis.html">search_all_cis</a></span><span class="op">(</span>q <span class="op">=</span> <span class="st">"postelectoral"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">all_studies</span><span class="op">)</span><span class="op">)</span></span>
@@ -127,13 +248,14 @@ through all pages and get every matching result in a single tibble:</p>
 <code><a href="../reference/search_cis.html">search_cis()</a></code>.</p>
 <hr>
 </div>
+</div>
 <div class="section level3">
 <h3 id="reading-study-data-into-r">Reading study data into R<a class="anchor" aria-label="anchor" href="#reading-study-data-into-r"></a>
 </h3>
 <p><code><a href="../reference/read_cis.html">read_cis()</a></code> downloads the SPSS data file for a study and
 imports it directly into R as a labelled data frame (via
 <code>haven</code>):</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_cis.html">read_cis</a></span><span class="op">(</span><span class="fl">3411</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></code></pre></div>
 <hr>
@@ -144,7 +266,7 @@ imports it directly into R as a labelled data frame (via
 <p>After loading a study with <code><a href="../reference/read_cis.html">read_cis()</a></code>, use
 <code><a href="../reference/get_data_dictionary.html">get_data_dictionary()</a></code> to obtain a tidy tibble with every
 variable name, its label and its value labels:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span>   <span class="op">&lt;-</span> <span class="fu"><a href="../reference/read_cis.html">read_cis</a></span><span class="op">(</span><span class="fl">3328</span><span class="op">)</span></span>
 <span><span class="va">dict</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_data_dictionary.html">get_data_dictionary</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">dict</span><span class="op">)</span></span>
@@ -163,7 +285,7 @@ variable name, its label and its value labels:</p>
 of a study from the CIS website — field dates, study type, country,
 authorship, thematic indices, etc. — and returns it as a two-column
 tibble (<code>field</code>, <code>value</code>):</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">meta</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_metadata.html">get_metadata</a></span><span class="op">(</span><span class="fl">3328</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span></span></code></pre></div>
 <hr>
@@ -174,7 +296,7 @@ tibble (<code>field</code>, <code>value</code>):</p>
 <p>If you want to keep the raw data files instead of reading them into a
 temporary directory, use <code><a href="../reference/download_study.html">download_study()</a></code>. It saves the ZIP
 archive to any local folder:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Save to the current working directory</span></span>
 <span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/download_study.html">download_study</a></span><span class="op">(</span><span class="fl">3328</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Saved to:"</span>, <span class="va">path</span>, <span class="st">"\n"</span><span class="op">)</span></span>
@@ -198,7 +320,7 @@ default)</li>
 <strong>Technical sheet</strong>
 (<code>wanted_file = "ft"</code>)</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Open the questionnaire for study 3328</span></span>
 <span><span class="fu"><a href="../reference/browse_pdf.html">browse_pdf</a></span><span class="op">(</span><span class="fl">3328</span><span class="op">)</span></span>
 <span></span>
