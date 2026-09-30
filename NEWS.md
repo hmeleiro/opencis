@@ -1,3 +1,22 @@
+# opencis 0.1.4
+
+## Improvements
+
+* Documented the CIS advanced Lucene search syntax supported by `search_cis()`
+  and `search_all_cis()`, including Boolean, exact-phrase, exclusion, range,
+  boosting, and field-specific query examples. Advanced queries can be passed
+  directly through `q` by starting them with `*`; the package handles URL
+  encoding.
+
+## Bug fixes
+
+* Fixed parsing of question and time-series search results after the CIS changed
+  the order of their metadata fields. Time-series results now also include the
+  numeric `data_points` field reported by the catalog.
+
+* Added regression tests for question and time-series search result parsing and
+  for preserving advanced Lucene expressions when catalog URLs are built.
+
 # opencis 0.1.3
 
 ## Improvements

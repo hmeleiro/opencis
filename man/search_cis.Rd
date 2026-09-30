@@ -17,7 +17,9 @@ search_cis(
 \arguments{
 \item{start}{Integer. The starting page for the search results. Default is 1, iterate to get more results.}
 
-\item{q}{String. The search query. Default is an empty string.}
+\item{q}{A single character string containing a simple search or an advanced
+Lucene query. Advanced queries must start with \code{*}; pass them as plain text
+because URL encoding is handled by the package. Default is an empty string.}
 
 \item{from}{Date or NULL. The start date for filtering results. Default is NULL. The date format must be "YYYY-MM-DD".}
 
@@ -35,6 +37,19 @@ A data.frame with the search results.
 }
 \description{
 Searches for CIS studies using the CIS search engine.
+}
+\details{
+The CIS catalog supports advanced Lucene queries when \code{q} starts with \code{*}.
+These queries can use Boolean operators, exact phrases, exclusions, ranges,
+term boosting, and field-specific searches. For example,
+\verb{*surveyCode:(2610 OR 2829 OR 2956)} searches for several study codes and
+\verb{*title_es_ES:(+barometro +2024 -sanitario)} combines required and excluded
+title terms.
+
+Advanced queries are interpreted by the CIS server. Invalid syntax may
+return no results, and relevance ordering can differ from a simple search.
+Catalog fields and examples are documented at
+\url{https://www.cis.es/es/estudios/catalogo}.
 }
 \examples{
 if (interactive()) {
@@ -54,5 +69,15 @@ studies <- search_cis(q = "ideologia",
                           to = "2020-01-01",
                           catalogo = "serie")
 print(studies)
+
+# Advanced Lucene searches start with an asterisk
+studies <- search_cis(q = "*surveyCode:(2610 OR 2829 OR 2956)")
+print(studies)
+
+questions <- search_cis(
+  q = "*question_es_ES:(divorcio)",
+  catalogo = "pregunta"
+)
+print(questions)
 }
 }

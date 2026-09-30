@@ -15,4 +15,14 @@ studies <- search_cis(q = "ideologia",
                           to = "2020-01-01",
                           catalogo = "serie")
 print(studies)
+
+# Advanced Lucene searches start with an asterisk
+studies <- search_cis(q = "*surveyCode:(2610 OR 2829 OR 2956)")
+print(studies)
+
+questions <- search_cis(
+  q = "*question_es_ES:(divorcio)",
+  catalogo = "pregunta"
+)
+print(questions)
 }

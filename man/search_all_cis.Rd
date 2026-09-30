@@ -15,7 +15,9 @@ search_all_cis(
 )
 }
 \arguments{
-\item{q}{String. The search query. Default is an empty string.}
+\item{q}{A single character string containing a simple search or an advanced
+Lucene query. Advanced queries must start with \code{*}; pass them as plain text
+because URL encoding is handled by the package. Default is an empty string.}
 
 \item{from}{Date or NULL. The start date for filtering results. Default is NULL.
 The date format must be "YYYY-MM-DD".}
@@ -53,6 +55,9 @@ Set \code{options(opencis.max_retries = 8)} to change the retry limit; zero
 disables retries. Cached responses do not wait or use the network.
 Resuming retrieves only the remaining pages; combine them with the saved rows.
 Page positions may change if the remote catalog changes between calls.
+
+Advanced Lucene queries supported by \code{\link[=search_cis]{search_cis()}} can also be supplied
+through \code{q}; the same expression is retained across every requested page.
 }
 \examples{
 if (interactive()) {

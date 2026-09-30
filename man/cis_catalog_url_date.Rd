@@ -17,7 +17,9 @@ cis_catalog_url_date(
 \arguments{
 \item{start}{Integer. The starting page for the search results. Default is 1, iterate to get more results.}
 
-\item{q}{String. The search query. Default is an empty string.}
+\item{q}{A single character string containing a simple search or an advanced
+Lucene query. Advanced queries must start with \code{*}; pass them as plain text
+because URL encoding is handled by the package. Default is an empty string.}
 
 \item{from}{Date or NULL. The start date for filtering results. Default is NULL}
 

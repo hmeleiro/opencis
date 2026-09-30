@@ -48,6 +48,68 @@ search_cis(q = "feminismo", catalogo = "pregunta")
 search_cis(q = "situación económica", catalogo = "serie")
 ```
 
+#### Advanced search
+
+The `q` argument accepts the [advanced Lucene syntax supported by the CIS
+catalog](https://www.cis.es/es/estudios/catalogo). An advanced expression must
+start with `*`. Pass the expression as plain text; `opencis` handles URL
+encoding.
+
+```{r, eval = FALSE}
+# Match any of several study codes
+search_cis(q = "*surveyCode:(2610 OR 2829 OR 2956)")
+
+# Require barometro and 2024 in the title, but exclude sanitario
+search_cis(q = "*title_es_ES:(+barometro +2024 -sanitario)")
+
+# Search question text and retrieve every result page
+search_all_cis(
+  q = "*question_es_ES:(divorcio)",
+  catalogo = "pregunta"
+)
+
+# Combine fields: questions about divorce from studies after number 3540
+search_all_cis(
+  q = "*question_es_ES:(divorcio) AND surveyCodeNumber:{3540 TO *]",
+  catalogo = "pregunta"
+)
+
+# Search for an exact phrase
+search_cis(q = '*title_es_ES:"barómetro de la vivienda"')
+
+# Search a numeric study-code range (used in the CIS documentation)
+search_cis(q = "*(surveyCodeNumber:[3000 TO 3002])")
+```
+
+The CIS documents the following searchable fields. Catalog data are currently
+indexed only in Spanish (`es_ES`).
+
+| Field | Indexing | Contents |
+|:---|:---|:---|
+| `surveyCode` | keyword | Study code |
+| `questionCode` | keyword | Question code |
+| `serieCode` | keyword | Series code |
+| `title_es_ES` | text | Study, question, or series title |
+| `description_es_ES` | text | Study or series description |
+| `publishDate` | text | Study/question date, or latest series date |
+| `question_es_ES` | text | Study question wording |
+| `questionText_es_ES` | text | Study question text |
+| `descriptors_es_ES` | text | Question descriptors |
+| `collections_es_ES` | text | Study collection names |
+| `publications_es_ES` | text | Study publication names |
+| `subjectIndexes_es_ES` | text | Study subject indexes |
+| `orders_es_ES` | text | Study commissioners |
+| `authors_es_ES` | text | Study authors |
+
+The CIS also uses `surveyCodeNumber` in its numeric-range example, although it
+is not included in the site's field table. Treat that field as server-specific
+and potentially less stable than the documented list.
+
+Lucene expressions can combine `AND`, `OR`, required terms (`+`), excluded
+terms (`-`), quoted phrases, ranges, and term boosting with `^`. Invalid syntax
+may return no results. Advanced searches also use a different relevance order
+from simple searches and do not highlight matches.
+
 By default `search_cis()` returns only the first page of results. Use `search_all_cis()` to automatically paginate through all pages and get every matching result in a single tibble:
 
 ```{r, eval = FALSE}
